@@ -45,6 +45,7 @@
           };
         },
         setForm: function (pos, item, value) {
+          console.log(this.state.sync[item]);
           if (this.state.sync[item]) {
             var left = this.state.left;
             var right = this.state.right;
@@ -64,7 +65,7 @@
           var sync = state.sync;
           sync[item] = value;
           var updated = { sync: sync };
-          if (value) {
+          if (value === true) {
             var right = state.right;
             right[item] = state.left[item];
             right.result = calcExpectedAtk(right);
@@ -80,13 +81,13 @@
                   <p>武器攻撃力</p>
                 </div>
                 <div className={inputColClass}>
-                  <NumberInput pos="left" item="weaponAtk" value={this.state.left.weaponAtk} onChange={this.setForm} />
+                  <NumberInput pos="left" item="weaponAtk" value={this.state.left.weaponAtk} min={0} max={1000} step={10} onChange={this.setForm} />
                 </div>
                 <div className={syncColClass}>
                   <SyncInputs item="weaponAtk" onChange={this.setSync} />
                 </div>
                 <div className={inputColClass}>
-                  <NumberInput pos='right' item="weaponAtk" value={this.state.right.weaponAtk} onChange={this.setForm} />
+                  <NumberInput pos="right" item="weaponAtk" value={this.state.right.weaponAtk} min={0} max={1000} step={10} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
@@ -123,7 +124,7 @@
         },
 
         render: function () {
-          return <input type="number" value={this.props.value} min="0" step="10" onChange={this._onChange} />
+          return <input type="number" value={this.props.value} min={this.props.min} max={this.props.max} step={this.props.step} onChange={this._onChange} />
         }
       });
 
