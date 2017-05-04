@@ -16,13 +16,19 @@
       var createFormState = function () {
         return {
           weaponAtk: 0, weaponCrit: 0, sharpness: 'purple',
+          possessedItem: 'both',
           result: 0.0
         };
       };
 
+      var findFactor = function (ary, value) {
+        return ary.find((x) => x.value === value).factor;
+      };
+
       var calcExpectedAtk = function (cxt) {
-        var sharpness = colors.find((color) => color.value === cxt.sharpness).magnification;
-        return cxt.weaponAtk * (1 + cxt.weaponCrit * 0.25 / 100) * sharpness;
+        var baseAtk = cxt.weaponAtk + findFactor(possessedItems, cxt.possessedItem);
+        var sharpness = findFactor(colors, cxt.sharpness);
+        return (baseAtk) * (1 + cxt.weaponCrit * 0.25 / 100) * sharpness;
       };
 
       var otherSideOf = function(pos) {
@@ -40,13 +46,20 @@
       var syncColClass="col-md-1"
 
       var colors = [
-        { value: 'purple', magnification: 1.39, text: '紫 (1.39)' },
-        { value: 'white', magnification: 1.32, text: '白 (1.32)' },
-        { value: 'blue', magnification: 1.2, text: '青 (1.2)' },
-        { value: 'green', magnification: 1.05, text: '緑 (1.05)' },
-        { value: 'yellow', magnification: 1.0, text: '黄 (1.0)' },
-        { value: 'orange', magnification: 0.75, text: '橙 (0.75)' },
-        { value: 'red', magnification: 0.5, text: '赤 (0.5)' }
+        { value: 'purple', factor: 1.39, text: '紫 (1.39)' },
+        { value: 'white', factor: 1.32, text: '白 (1.32)' },
+        { value: 'blue', factor: 1.2, text: '青 (1.2)' },
+        { value: 'green', factor: 1.05, text: '緑 (1.05)' },
+        { value: 'yellow', factor: 1.0, text: '黄 (1.0)' },
+        { value: 'orange', factor: 0.75, text: '橙 (0.75)' },
+        { value: 'red', factor: 0.5, text: '赤 (0.5)' }
+      ];
+
+      var possessedItems = [
+        { value: 'both', factor: 15, text: '爪・護符 (+15)' },
+        { value: 'claw', factor: 9, text: '爪のみ (+9)' },
+        { value: 'amulet', factor: 6, text: '護符のみ (+6)' },
+        { value: 'none', factor: 0, text: 'なし (+0)' },
       ];
 
       var App = React.createClass({
@@ -129,6 +142,20 @@
                 </div>
                 <div className={inputColClass}>
                   <RadioInput pos="right" item="sharpness" value={this.state.right.sharpness} items={colors} onChange={this.setForm} />
+                </div>
+              </div>
+              <div className="row">
+                <div className={labelColClass}>
+                  <p>爪・護符</p>
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="left" item="possessedItem" value={this.state.left.possessedItem} items={possessedItems} onChange={this.setForm} />
+                </div>
+                <div className={syncColClass}>
+                  <SyncInputs item="possessedItem" onChange={this.setSync} />
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="right" item="possessedItem" value={this.state.right.possessedItem} items={possessedItems} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
