@@ -48,13 +48,13 @@
                   <p>武器攻撃力</p>
                 </div>
                 <div className={inputColClass}>
-                  <WeaponAtkInput pos={'left'} value={this.state.left.weaponAtk} onChange={this.calcAtack} />
+                  <NumberInput pos="left" item="weaponAtk" value={this.state.left.weaponAtk} onChange={this.calcAtack} />
                 </div>
                 <div className={syncColClass}>
                   <SyncInputs item="weaponAtk" />
                 </div>
                 <div className={inputColClass}>
-                  <WeaponAtkInput pos={'right'} value={this.state.right.weaponAtk} onChange={this.calcAtack} />
+                  <{NumberInput pos='right' item="weaponAtk" value={this.state.right.weaponAtk} onChange={this.calcAtack} />
                 </div>
               </div>
               <div className="row">
@@ -84,9 +84,9 @@
         }
       });
 
-      var WeaponAtkInput = React.createClass({
+      var NumberInput = React.createClass({
         _onChange: function (e) {
-          this.props.onChange(this.props.pos, 'weaponAtk', parseInt(e.target.value, 10));
+          this.props.onChange(this.props.pos, this.props.item, parseInt(e.target.value, 10));
         },
 
         render: function () {
