@@ -21,6 +21,10 @@
         return cxt.weaponAtk;
       };
 
+      var labelColClass="col-md-2"
+      var inputColClass="col-md-1"
+      var syncColClass="col-md-1 col-md-offset-1"
+
       var App = React.createClass({
         getInitialState: function() {
           return {
@@ -40,28 +44,42 @@
           return (
             <div className="container">
               <div className="row">
-                <div className="col-md-2">
+                <div className={labelColClass}>
                   <p>武器攻撃力</p>
                 </div>
-                <div className="col-md-1">
+                <div className={inputColClass}>
                   <WeaponAtkInput pos={'left'} value={this.state.left.weaponAtk} onChange={this.calcAtack} />
                 </div>
-                <div className="col-md-1 col-md-offset-1">
+                <div className={syncColClass}>
+                  <SyncInputs item="weaponAtk" />
+                </div>
+                <div className={inputColClass}>
                   <WeaponAtkInput pos={'right'} value={this.state.right.weaponAtk} onChange={this.calcAtack} />
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-2">
+                <div className={labelColClass}>
                   <p>計算結果</p>
                 </div>
-                <div className="col-md-1">
+                <div className={inputColClass}>
                   <Result result={this.state.left.result} />
                 </div>
-                <div className="col-md-1 col-md-offset-1">
+                <div className={syncColClass}></div>
+                <div className={inputColClass}>
                   <Result result={this.state.right.result} />
                 </div>
               </div>
             </div>
+          );
+        }
+      });
+
+      var SyncInputs = React.createClass({
+        _onChange: function (e) {
+        },
+        render: function (e) {
+          return (
+            <input type="checkbox" data-item={this.props.item} onChange={this._onChange} />
           );
         }
       });
