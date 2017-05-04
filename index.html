@@ -21,6 +21,16 @@
         return cxt.weaponAtk;
       };
 
+      var otherSideOf = function(pos) {
+        if (pos === 'left') {
+          return 'right';
+        } else if (pos === 'right') {
+          return 'left';
+        } else {
+          console.error(`otherSideOf: unexpected argument ${pos}`);
+        }
+      }
+
       var labelColClass="col-md-2"
       var inputColClass="col-md-1"
       var syncColClass="col-md-1 col-md-offset-1"
@@ -34,11 +44,25 @@
             }
           };
         },
-        calcAtack: function (pos, key, value) {
-          var state = this.state[pos];
-          state[key] = value;
-          state['result'] = calcExpectedAtk(this.state[pos]);
-          this.setState({ [pos]: state });
+        setForm: function (pos, item, value) {
+          if (this.state.sync[item]) {
+            var left = this.state.left;
+            var right = this.state.right;
+            left[item] = right[item] = value;
+            left.result = calcExpectedAtk(left);
+            right.result = calcExpectedAtk(right);
+            this.setState({ left: left, right: right });
+          } else {
+            var state = this.state[pos];
+            state[item] = value;
+            state.result = calcExpectedAtk(state);
+            this.setState({ [pos]: state });
+          }
+        },
+        setSync: function (item, value) {
+          var state = this.state.sync;
+          state[item] = value;
+          this.setState({ sync: state });
         },
         render: function () {
           return (
@@ -48,13 +72,13 @@
                   <p>武器攻撃力</p>
                 </div>
                 <div className={inputColClass}>
-                  <NumberInput pos="left" item="weaponAtk" value={this.state.left.weaponAtk} onChange={this.calcAtack} />
+                  <NumberInput pos="left" item="weaponAtk" value={this.state.left.weaponAtk} onChange={this.setForm} />
                 </div>
                 <div className={syncColClass}>
-                  <SyncInputs item="weaponAtk" />
+                  <SyncInputs item="weaponAtk" onChange={this.setSync} />
                 </div>
                 <div className={inputColClass}>
-                  <{NumberInput pos='right' item="weaponAtk" value={this.state.right.weaponAtk} onChange={this.calcAtack} />
+                  <NumberInput pos='right' item="weaponAtk" value={this.state.right.weaponAtk} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
@@ -76,6 +100,7 @@
 
       var SyncInputs = React.createClass({
         _onChange: function (e) {
+          this.props.onChange(this.props.item, e.target.checked);
         },
         render: function (e) {
           return (
