@@ -16,7 +16,7 @@
       var createFormState = function () {
         return {
           weaponAtk: 0, weaponCrit: 0, sharpness: 'purple',
-          possessedItem: 'both', permanentItem: 'none',
+          possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none',
           result: '-'
         };
       };
@@ -28,7 +28,8 @@
       var calcExpectedAtk = function (cxt) {
         var baseAtk = cxt.weaponAtk +
           findFactor(possessedItems, cxt.possessedItem) +
-          findFactor(permanentItems, cxt.permanentItem);
+          findFactor(permanentItems, cxt.permanentItem) +
+          findFactor(temporaryItems, cxt.temporaryItem);
         var sharpness = findFactor(sharpnesses, cxt.sharpness);
         return (baseAtk) * (1 + cxt.weaponCrit * 0.25 / 100) * sharpness;
       };
@@ -67,6 +68,12 @@
       var permanentItems = [
         { value: 'great', factor: 7, text: '鬼人薬グレート (+7)' },
         { value: 'normal', factor: 5, text: '鬼人薬 (+5)' },
+        { value: 'none', factor: 0, text: 'なし (+0)' }
+      ];
+
+      var temporaryItems = [
+        { value: 'pill', factor: 25, text: '怪力の丸薬 (+25)' },
+        { value: 'seed', factor: 10, text: '怪力の種 (+10)' },
         { value: 'none', factor: 0, text: 'なし (+0)' }
       ];
 
@@ -178,6 +185,20 @@
                 </div>
                 <div className={inputColClass}>
                   <RadioInput pos="right" item="permanentItem" value={this.state.right.permanentItem} items={permanentItems} onChange={this.setForm} />
+                </div>
+              </div>
+              <div className="row">
+                <div className={labelColClass}>
+                  <p>種・丸薬</p>
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="left" item="temporaryItem" value={this.state.left.temporaryItem} items={temporaryItems} onChange={this.setForm} />
+                </div>
+                <div className={syncColClass}>
+                  <SyncInputs item="temporaryItem" onChange={this.setSync} />
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="right" item="temporaryItem" value={this.state.right.temporaryItem} items={temporaryItems} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
