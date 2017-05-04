@@ -13,9 +13,76 @@
     <h1>MHXX Atack Comparator</h1>
     <div id="app"></div>
     <script type="text/jsx">
+      var createFormState = function () {
+        return { weaponAtk: 0, result: 0.0 };
+      };
+
+      var calcExpectedAtk = function (cxt) {
+        return cxt.weaponAtk;
+      };
+
       var App = React.createClass({
-        render: function() {
-          return <p className="text-info">hello world!</p>;
+        getInitialState: function() {
+          return {
+            left: createFormState(), right: createFormState(),
+            sync: {
+              weaponAtk: false
+            }
+          };
+        },
+        calcAtack: function (pos, key, value) {
+          var state = this.state[pos];
+          state[key] = value;
+          state['result'] = calcExpectedAtk(this.state[pos]);
+          this.setState({ [pos]: state });
+        },
+        render: function () {
+          return (
+            <div className="container">
+              <div className="row">
+                <div className="col-md-2">
+                  <p>武器攻撃力</p>
+                </div>
+                <div className="col-md-1">
+                  <WeaponAtkInput pos={'left'} value={this.state.left.weaponAtk} onChange={this.calcAtack} />
+                </div>
+                <div className="col-md-1 col-md-offset-1">
+                  <WeaponAtkInput pos={'right'} value={this.state.right.weaponAtk} onChange={this.calcAtack} />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-2">
+                  <p>計算結果</p>
+                </div>
+                <div className="col-md-1">
+                  <Result result={this.state.left.result} />
+                </div>
+                <div className="col-md-1 col-md-offset-1">
+                  <Result result={this.state.right.result} />
+                </div>
+              </div>
+            </div>
+          );
+        }
+      });
+
+      var WeaponAtkInput = React.createClass({
+        _onChange: function (e) {
+          this.props.onChange(this.props.pos, 'weaponAtk', parseInt(e.target.value, 10));
+        },
+
+        render: function () {
+          return <input type="number" value={this.props.value} min="0" step="10" onChange={this._onChange} />
+        }
+      });
+
+      var Result = React.createClass({
+        render: function () {
+          return (
+            <div>
+              <p>{this.props.result}</p>
+            </div>
+          );
         }
       });
 
