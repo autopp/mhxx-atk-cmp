@@ -17,7 +17,7 @@
         return {
           weaponAtk: 0, weaponCrit: 0, sharpness: 'purple',
           possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
-          atkUp: 'none', critUp: 'none',
+          atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
           result: '-'
         };
       };
@@ -31,8 +31,10 @@
           findFactor(possessedItems, cxt.possessedItem) +
           findFactor(permanentItems, cxt.permanentItem) +
           findFactor(temporaryItems, cxt.temporaryItem) +
-          findFactor(foods, cxt.food) + findFactor(atkUps, cxt.atkUp);
-        var crit = cxt.weaponCrit + findFactor(critUps, cxt.critUp);
+          findFactor(foods, cxt.food) + findFactor(atkUps, cxt.atkUp) +
+          findFactor(leftArmSkills, cxt.leftArmSkill).atk;
+        var crit = cxt.weaponCrit + findFactor(critUps, cxt.critUp) +
+          findFactor(leftArmSkills, cxt.leftArmSkill).crit;
         crit = Math.min(Math.max(crit, -100), 100);
         var sharpness = findFactor(sharpnesses, cxt.sharpness);
         return (baseAtk) * (1 + crit * 0.25 / 100) * sharpness;
@@ -93,6 +95,15 @@
         { value: 'down1', factor: -5, text: '見切り-1 (-5)' },
         { value: 'down2', factor: -10, text: '見切り-2 (-10)' },
         { value: 'down3', factor: -15, text: '見切り-3 (-15)' }
+      ];
+
+      var leftArmSkills = [
+        { value: 'challenger2', factor: { atk: 20, crit: 15 }, text: '挑戦者2 (攻撃+20, 会心+15)' },
+        { value: 'challenger1', factor: { atk: 10, crit: 10 }, text: '挑戦者1 (攻撃+10, 会心+10)' },
+        { value: 'fullCharge', factor: { atk: 20, crit: 0 }, text: 'フルチャージ (攻撃+20)' },
+        { value: 'latentPower2', factor: { atk: 0, crit: 50 }, text: '力の解放2 (会心+50)' },
+        { value: 'latentPower1', factor: { atk: 0, crit: 30 }, text: '力の解放1 (会心+30)' },
+        { value: 'none', factor: { atk: 0, crit: 0 }, text: 'なし (+0)' }
       ];
 
       var App = React.createClass({
@@ -257,6 +268,20 @@
                 </div>
                 <div className={inputColClass}>
                   <RadioInput pos="right" item="critUp" value={this.state.right.critUp} items={critUps} onChange={this.setForm} />
+                </div>
+              </div>
+              <div className="row">
+                <div className={labelColClass}>
+                  <p>闘魂・無傷・本気</p>
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="left" item="leftArmSkill" value={this.state.left.leftArmSkill} items={leftArmSkills} onChange={this.setForm} />
+                </div>
+                <div className={syncColClass}>
+                  <SyncInputs item="leftArmSkill" onChange={this.setSync} />
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="right" item="leftArmSkill" value={this.state.right.leftArmSkill} items={leftArmSkills} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
