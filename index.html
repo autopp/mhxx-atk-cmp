@@ -35,19 +35,9 @@
         return (baseAtk) * (1 + cxt.weaponCrit * 0.25 / 100) * sharpness;
       };
 
-      var otherSideOf = function(pos) {
-        if (pos === 'left') {
-          return 'right';
-        } else if (pos === 'right') {
-          return 'left';
-        } else {
-          console.error(`otherSideOf: unexpected argument ${pos}`);
-        }
-      }
-
-      var labelColClass="col-md-2"
-      var inputColClass="col-md-3"
-      var syncColClass="col-md-1"
+      var labelColClass="col-md-2";
+      var inputColClass="col-md-3";
+      var syncColClass="col-md-1";
 
       var sharpnesses = [
         { value: 'purple', factor: 1.39, text: '紫 (1.39)' },
@@ -89,9 +79,7 @@
         getInitialState: function() {
           return {
             left: createFormState(), right: createFormState(),
-            sync: {
-              weaponAtk: false, weaponCrit: false, sharpness: false
-            }
+            sync: {}
           };
         },
         setForm: function (pos, item, value) {
