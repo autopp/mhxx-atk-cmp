@@ -60,9 +60,17 @@
           }
         },
         setSync: function (item, value) {
-          var state = this.state.sync;
-          state[item] = value;
-          this.setState({ sync: state });
+          var state = this.state;
+          var sync = state.sync;
+          sync[item] = value;
+          var updated = { sync: sync };
+          if (value) {
+            var right = state.right;
+            right[item] = state.left[item];
+            right.result = calcExpectedAtk(right);
+            updated.right = right;
+          }
+          this.setState(updated);
         },
         render: function () {
           return (
