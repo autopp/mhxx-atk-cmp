@@ -21,7 +21,8 @@
       };
 
       var calcExpectedAtk = function (cxt) {
-        return cxt.weaponAtk * (1 + cxt.weaponCrit * 0.25 / 100);
+        var sharpness = colors.find((color) => color.value === cxt.sharpness).magnification;
+        return cxt.weaponAtk * (1 + cxt.weaponCrit * 0.25 / 100) * sharpness;
       };
 
       var otherSideOf = function(pos) {
@@ -39,13 +40,13 @@
       var syncColClass="col-md-1"
 
       var colors = [
-        { value: 'purple', text: '紫 (1.39)' },
-        { value: 'white', text: '白 (1.32)' },
-        { value: 'blue', text: '青 (1.2)' },
-        { value: 'green', text: '緑 (1.05)' },
-        { value: 'yellow', text: '黄 (1.0)' },
-        { value: 'orange', text: '橙 (0.75)' },
-        { value: 'red', text: '赤 (0.5)' }
+        { value: 'purple', magnification: 1.39, text: '紫 (1.39)' },
+        { value: 'white', magnification: 1.32, text: '白 (1.32)' },
+        { value: 'blue', magnification: 1.2, text: '青 (1.2)' },
+        { value: 'green', magnification: 1.05, text: '緑 (1.05)' },
+        { value: 'yellow', magnification: 1.0, text: '黄 (1.0)' },
+        { value: 'orange', magnification: 0.75, text: '橙 (0.75)' },
+        { value: 'red', magnification: 0.5, text: '赤 (0.5)' }
       ];
 
       var App = React.createClass({
