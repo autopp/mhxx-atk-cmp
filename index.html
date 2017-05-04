@@ -14,11 +14,14 @@
     <div id="app"></div>
     <script type="text/jsx">
       var createFormState = function () {
-        return { weaponAtk: 0, result: 0.0 };
+        return {
+          weaponAtk: 0, weaponCrit: 0,
+          result: 0.0
+        };
       };
 
       var calcExpectedAtk = function (cxt) {
-        return cxt.weaponAtk;
+        return cxt.weaponAtk * (1 + cxt.weaponCrit * 0.25 / 100);
       };
 
       var otherSideOf = function(pos) {
@@ -40,7 +43,7 @@
           return {
             left: createFormState(), right: createFormState(),
             sync: {
-              weaponAtk: false
+              weaponAtk: false, weaponCrit: false
             }
           };
         },
@@ -88,6 +91,20 @@
                 </div>
                 <div className={inputColClass}>
                   <NumberInput pos="right" item="weaponAtk" value={this.state.right.weaponAtk} min={0} max={1000} step={10} onChange={this.setForm} />
+                </div>
+              </div>
+              <div className="row">
+                <div className={labelColClass}>
+                  <p>武器会心率</p>
+                </div>
+                <div className={inputColClass}>
+                  <NumberInput pos="left" item="weaponCrit" value={this.state.left.weaponCrit} min={-100} max={100} step={5} onChange={this.setForm} />
+                </div>
+                <div className={syncColClass}>
+                  <SyncInputs item="weaponCrit" onChange={this.setSync} />
+                </div>
+                <div className={inputColClass}>
+                  <NumberInput pos="right" item="weaponCrit" value={this.state.right.weaponCrit} min={-100} max={100} step={5} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
