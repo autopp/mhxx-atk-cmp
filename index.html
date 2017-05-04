@@ -17,7 +17,7 @@
         return {
           weaponAtk: 0, weaponCrit: 0, sharpness: 'purple',
           possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
-          atkUp: 'none',
+          atkUp: 'none', critUp: 'none',
           result: '-'
         };
       };
@@ -32,8 +32,10 @@
           findFactor(permanentItems, cxt.permanentItem) +
           findFactor(temporaryItems, cxt.temporaryItem) +
           findFactor(foods, cxt.food) + findFactor(atkUps, cxt.atkUp);
+        var crit = cxt.weaponCrit + findFactor(critUps, cxt.critUp);
+        crit = Math.min(Math.max(crit, -100), 100);
         var sharpness = findFactor(sharpnesses, cxt.sharpness);
-        return (baseAtk) * (1 + cxt.weaponCrit * 0.25 / 100) * sharpness;
+        return (baseAtk) * (1 + crit * 0.25 / 100) * sharpness;
       };
 
       var labelColClass="col-md-2";
@@ -81,6 +83,16 @@
         { value: 'medium', factor: 15, text: '攻撃力UP【中】 (+15)' },
         { value: 'small', factor: 10, text: '攻撃力UP【小】 (+10)' },
         { value: 'none', factor: 0, text: 'なし (+0)' }
+      ];
+
+      var critUps = [
+        { value: 'up3', factor: 30, text: '見切り+3 (+30)' },
+        { value: 'up2', factor: 20, text: '見切り+2 (+20)' },
+        { value: 'up1', factor: 10, text: '見切り+1 (+10)' },
+        { value: 'none', factor: 0, text: 'なし (+0)' },
+        { value: 'down1', factor: -5, text: '見切り-1 (-5)' },
+        { value: 'down2', factor: -10, text: '見切り-2 (-10)' },
+        { value: 'down3', factor: -15, text: '見切り-3 (-15)' }
       ];
 
       var App = React.createClass({
@@ -231,6 +243,20 @@
                 </div>
                 <div className={inputColClass}>
                   <RadioInput pos="right" item="atkUp" value={this.state.right.atkUp} items={atkUps} onChange={this.setForm} />
+                </div>
+              </div>
+              <div className="row">
+                <div className={labelColClass}>
+                  <p>達人</p>
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="left" item="critUp" value={this.state.left.critUp} items={critUps} onChange={this.setForm} />
+                </div>
+                <div className={syncColClass}>
+                  <SyncInputs item="critUp" onChange={this.setSync} />
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="right" item="critUp" value={this.state.right.critUp} items={critUps} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
