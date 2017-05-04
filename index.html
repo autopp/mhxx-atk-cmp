@@ -27,7 +27,7 @@
 
       var calcExpectedAtk = function (cxt) {
         var baseAtk = cxt.weaponAtk + findFactor(possessedItems, cxt.possessedItem);
-        var sharpness = findFactor(colors, cxt.sharpness);
+        var sharpness = findFactor(sharpnesses, cxt.sharpness);
         return (baseAtk) * (1 + cxt.weaponCrit * 0.25 / 100) * sharpness;
       };
 
@@ -45,7 +45,7 @@
       var inputColClass="col-md-3"
       var syncColClass="col-md-1"
 
-      var colors = [
+      var sharpnesses = [
         { value: 'purple', factor: 1.39, text: '紫 (1.39)' },
         { value: 'white', factor: 1.32, text: '白 (1.32)' },
         { value: 'blue', factor: 1.2, text: '青 (1.2)' },
@@ -135,13 +135,13 @@
                   <p>斬れ味</p>
                 </div>
                 <div className={inputColClass}>
-                  <RadioInput pos="left" item="sharpness" value={this.state.left.sharpness} items={colors} onChange={this.setForm} />
+                  <RadioInput pos="left" item="sharpness" value={this.state.left.sharpness} items={sharpnesses} onChange={this.setForm} />
                 </div>
                 <div className={syncColClass}>
                   <SyncInputs item="sharpness" onChange={this.setSync} />
                 </div>
                 <div className={inputColClass}>
-                  <RadioInput pos="right" item="sharpness" value={this.state.right.sharpness} items={colors} onChange={this.setForm} />
+                  <RadioInput pos="right" item="sharpness" value={this.state.right.sharpness} items={sharpnesses} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
