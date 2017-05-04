@@ -16,7 +16,7 @@
       var createFormState = function () {
         return {
           weaponAtk: 0, weaponCrit: 0, sharpness: 'purple',
-          possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none',
+          possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
           result: '-'
         };
       };
@@ -29,7 +29,8 @@
         var baseAtk = cxt.weaponAtk +
           findFactor(possessedItems, cxt.possessedItem) +
           findFactor(permanentItems, cxt.permanentItem) +
-          findFactor(temporaryItems, cxt.temporaryItem);
+          findFactor(temporaryItems, cxt.temporaryItem) +
+          findFactor(temporaryItems, cxt.food);
         var sharpness = findFactor(sharpnesses, cxt.sharpness);
         return (baseAtk) * (1 + cxt.weaponCrit * 0.25 / 100) * sharpness;
       };
@@ -74,6 +75,13 @@
       var temporaryItems = [
         { value: 'pill', factor: 25, text: '怪力の丸薬 (+25)' },
         { value: 'seed', factor: 10, text: '怪力の種 (+10)' },
+        { value: 'none', factor: 0, text: 'なし (+0)' }
+      ];
+
+      var foods = [
+        { value: 'large', factor: 7, text: '攻撃力【大】 (+7)' },
+        { value: 'medium', factor: 5, text: '攻撃力【中】 (+5)' },
+        { value: 'small', factor: 3, text: '攻撃力【小】 (+3)' },
         { value: 'none', factor: 0, text: 'なし (+0)' }
       ];
 
@@ -199,6 +207,20 @@
                 </div>
                 <div className={inputColClass}>
                   <RadioInput pos="right" item="temporaryItem" value={this.state.right.temporaryItem} items={temporaryItems} onChange={this.setForm} />
+                </div>
+              </div>
+              <div className="row">
+                <div className={labelColClass}>
+                  <p>食事</p>
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="left" item="food" value={this.state.left.food} items={foods} onChange={this.setForm} />
+                </div>
+                <div className={syncColClass}>
+                  <SyncInputs item="food" onChange={this.setSync} />
+                </div>
+                <div className={inputColClass}>
+                  <RadioInput pos="right" item="food" value={this.state.right.food} items={foods} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
