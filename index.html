@@ -16,7 +16,7 @@
     <script type="text/jsx">
       var labelColClass="col-lg-2";
       var inputColClass="col-lg-4";
-      var syncColClass="col-lg-1";
+      var syncColClass="col-lg-1 sync-col";
 
       var App = React.createClass({
         sharpnesses: [
@@ -213,12 +213,15 @@
       });
 
       var SyncInputs = React.createClass({
-        _onChange: function (e) {
-          this.props.onChange(this.props.item, e.target.checked);
+        _onClick: function (e) {
+          this.props.onChange(this.props.item, !this.props.synced);
         },
         render: function (e) {
+          let style = this.props.synced ? 'btn-info' : 'btn-default';
+          let className = `btn ${style} btn-xs sync-button`
+          let text = this.props.synced ? 'Synced' : 'Unsynced';
           return (
-            <input type="checkbox" data-item={this.props.item} onChange={this._onChange} />
+            <button type="button" className={className} onClick={this._onClick}>{text}</button>
           );
         }
       });
@@ -244,7 +247,7 @@
                 <NumberInput pos="left" item={this.props.item} value={this.props.state.left[this.props.item]} min={this.props.min} max={this.props.max} step={this.props.step} onChange={this.props.onChange} />
               </div>
               <div className={syncColClass}>
-                <SyncInputs item={this.props.item} onChange={this.props.setSync} />
+                <SyncInputs item={this.props.item} synced={this.props.state.sync[this.props.item]} onChange={this.props.setSync} />
               </div>
               <div className={inputColClass}>
                 <NumberInput pos="right" item={this.props.item} value={this.props.state.right[this.props.item]} min={this.props.min} max={this.props.max} step={this.props.step} onChange={this.props.onChange} />
@@ -279,7 +282,7 @@
                 <RadioInput pos="left" item={this.props.item} value={this.props.state.left[this.props.item]} items={this.props.items} onChange={this.props.onChange} />
               </div>
               <div className={syncColClass}>
-                <SyncInputs item={this.props.item} onChange={this.props.setSync} />
+                <SyncInputs item={this.props.item} synced={this.props.state.sync[this.props.item]} onChange={this.props.setSync} />
               </div>
               <div className={inputColClass}>
                 <RadioInput pos="right" item={this.props.item} value={this.props.state.right[this.props.item]} items={this.props.items} onChange={this.props.onChange} />
@@ -310,7 +313,7 @@
                 <CheckboxInput pos="left" item={this.props.item} value={this.props.state.left[this.props.item]} onChange={this.props.onChange} />
               </div>
               <div className={syncColClass}>
-                <SyncInputs item={this.props.item} onChange={this.props.setSync} />
+                <SyncInputs item={this.props.item} synced={this.props.state.sync[this.props.item]} onChange={this.props.setSync} />
               </div>
               <div className={inputColClass}>
                 <CheckboxInput pos="right" item={this.props.item} value={this.props.state.right[this.props.item]} onChange={this.props.onChange} />

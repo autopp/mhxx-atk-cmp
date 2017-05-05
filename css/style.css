@@ -9,3 +9,11 @@ input[type="radio"] {
 label.radioButton {
   margin-right: 5px;
 }
+
+button.sync-button {
+  margin-bottom: 5px;
+}
+
+.sync-col {
+  text-align: center;
+}
