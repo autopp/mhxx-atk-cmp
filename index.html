@@ -27,21 +27,6 @@
         return ary.find((x) => x.value === value).factor;
       };
 
-      var calcExpectedAtk = function (cxt) {
-        var baseAtk = cxt.weaponAtk +
-          findFactor(possessedItems, cxt.possessedItem) +
-          findFactor(permanentItems, cxt.permanentItem) +
-          findFactor(temporaryItems, cxt.temporaryItem) +
-          findFactor(foods, cxt.food) + findFactor(atkUps, cxt.atkUp) +
-          findFactor(leftArmSkills, cxt.leftArmSkill).atk;
-        var crit = cxt.weaponCrit + findFactor(critUps, cxt.critUp) +
-          findFactor(leftArmSkills, cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0);
-        crit = Math.min(Math.max(crit, -100), 100);
-        let critFactor = crit >= 0 && cxt.superCrit ? 0.4 : 0.25
-        let sharpness = findFactor(sharpnesses, cxt.sharpness);
-        return (baseAtk) * (1 + crit * critFactor / 100) * sharpness;
-      };
-
       var labelColClass="col-md-2";
       var inputColClass="col-md-3";
       var syncColClass="col-md-1";
@@ -120,13 +105,13 @@
             var left = this.state.left;
             var right = this.state.right;
             left[item] = right[item] = value;
-            left.result = calcExpectedAtk(left);
-            right.result = calcExpectedAtk(right);
+            left.result = this.calcExpectedAtk(left);
+            right.result = this.calcExpectedAtk(right);
             this.setState({ left: left, right: right });
           } else {
             var state = this.state[pos];
             state[item] = value;
-            state.result = calcExpectedAtk(state);
+            state.result = this.calcExpectedAtk(state);
             this.setState({ [pos]: state });
           }
         },
@@ -138,10 +123,24 @@
           if (value === true) {
             var right = state.right;
             right[item] = state.left[item];
-            right.result = calcExpectedAtk(right);
+            right.result = this.calcExpectedAtk(right);
             updated.right = right;
           }
           this.setState(updated);
+        },
+        calcExpectedAtk: function (cxt) {
+          var baseAtk = cxt.weaponAtk +
+            findFactor(possessedItems, cxt.possessedItem) +
+            findFactor(permanentItems, cxt.permanentItem) +
+            findFactor(temporaryItems, cxt.temporaryItem) +
+            findFactor(foods, cxt.food) + findFactor(atkUps, cxt.atkUp) +
+            findFactor(leftArmSkills, cxt.leftArmSkill).atk;
+          var crit = cxt.weaponCrit + findFactor(critUps, cxt.critUp) +
+            findFactor(leftArmSkills, cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0);
+          crit = Math.min(Math.max(crit, -100), 100);
+          let critFactor = crit >= 0 && cxt.superCrit ? 0.4 : 0.25;
+          let sharpness = findFactor(sharpnesses, cxt.sharpness);
+          return (baseAtk) * (1 + crit * critFactor / 100) * sharpness;
         },
         render: function () {
           return (
