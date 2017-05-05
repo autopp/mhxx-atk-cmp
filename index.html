@@ -124,20 +124,25 @@
           this.setState(updated);
         },
         calcExpectedAtk: function (cxt) {
-          var baseAtk = cxt.weaponAtk +
-            this.findFactor('possessedItems', cxt.possessedItem) +
+          let baseAtk = this.calcAtack(cxt);
+          let crit = this.calcCrit(cxt);
+          let critFactor = this.calcCritFactor(crit, cxt);
+          let sharpness = this.findFactor('sharpnesses', cxt.sharpness);
+          return (baseAtk) * (1 + crit * critFactor / 100) * sharpness;
+        },
+        calcAtack: function (cxt) {
+          return cxt.weaponAtk + this.findFactor('possessedItems', cxt.possessedItem) +
             this.findFactor('permanentItems', cxt.permanentItem) +
             this.findFactor('temporaryItems', cxt.temporaryItem) +
             this.findFactor('foods', cxt.food) + this.findFactor('atkUps', cxt.atkUp) +
             this.findFactor('leftArmSkills', cxt.leftArmSkill).atk +
             this.findFactor('climateAdaptions', cxt.climateAdaption);
-          var crit = cxt.weaponCrit + this.findFactor('critUps', cxt.critUp) +
+        },
+        calcCrit: function (cxt) {
+          let crit = cxt.weaponCrit + this.findFactor('critUps', cxt.critUp) +
             this.findFactor('leftArmSkills', cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0) +
             this.findFactor('chainCrits', cxt.chainCrit);
-          crit = Math.min(Math.max(crit, -100), 100);
-          let critFactor = this.calcCritFactor(crit, cxt);
-          let sharpness = this.findFactor('sharpnesses', cxt.sharpness);
-          return (baseAtk) * (1 + crit * critFactor / 100) * sharpness;
+          return Math.min(Math.max(crit, -100), 100);
         },
         calcCritFactor: function (crit, cxt) {
           if (crit >= 0) {
