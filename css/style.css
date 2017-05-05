@@ -11,9 +11,15 @@ label.radioButton {
 }
 
 button.sync-button {
-  margin-bottom: 5px;
+  /*margin-bottom: 3px;*/
 }
 
 .sync-col {
   text-align: center;
+}
+
+.inputRow {
+  padding-top: 5px;
+  padding-bottom: 3px;
+  border-bottom: thin dashed;
 }
