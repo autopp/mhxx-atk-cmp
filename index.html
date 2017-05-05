@@ -17,7 +17,8 @@
         return {
           weaponAtk: 0, weaponCrit: 0, sharpness: 'purple',
           possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
-          atkUp: 'none', critUp: 'none', leftArmSkill: 'none', weakness: false,
+          atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
+          weakness: false, superCrit: false,
           result: '-'
         };
       };
@@ -36,8 +37,9 @@
         var crit = cxt.weaponCrit + findFactor(critUps, cxt.critUp) +
           findFactor(leftArmSkills, cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0);
         crit = Math.min(Math.max(crit, -100), 100);
-        var sharpness = findFactor(sharpnesses, cxt.sharpness);
-        return (baseAtk) * (1 + crit * 0.25 / 100) * sharpness;
+        let critFactor = crit >= 0 && cxt.superCrit ? 0.4 : 0.25
+        let sharpness = findFactor(sharpnesses, cxt.sharpness);
+        return (baseAtk) * (1 + crit * critFactor / 100) * sharpness;
       };
 
       var labelColClass="col-md-2";
@@ -296,6 +298,20 @@
                 </div>
                 <div className={inputColClass}>
                   <CheckboxInput pos="right" item="weakness" value={this.state.right.weakness} onChange={this.setForm} />
+                </div>
+              </div>
+              <div className="row">
+                <div className={labelColClass}>
+                  <p>超会心</p>
+                </div>
+                <div className={inputColClass}>
+                  <CheckboxInput pos="left" item="superCrit" value={this.state.left.superCrit} onChange={this.setForm} />
+                </div>
+                <div className={syncColClass}>
+                  <SyncInputs item="superCrit" onChange={this.setSync} />
+                </div>
+                <div className={inputColClass}>
+                  <CheckboxInput pos="right" item="superCrit" value={this.state.right.superCrit} onChange={this.setForm} />
                 </div>
               </div>
               <div className="row">
