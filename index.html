@@ -89,7 +89,7 @@
             possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
             atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
             weakness: false, superCrit: false, reversedCrit: false, chainCrit: 'none',
-            climateAdaption: 'none', blunt: false,
+            climateAdaption: 'none', blunt: false, resentment: false,
             result: '-'
           };
           let rightState = Object.assign({}, leftState);
@@ -136,7 +136,7 @@
             this.findFactor('temporaryItems', cxt.temporaryItem) +
             this.findFactor('foods', cxt.food) + this.findFactor('atkUps', cxt.atkUp) +
             this.findFactor('leftArmSkills', cxt.leftArmSkill).atk +
-            this.findFactor('climateAdaptions', cxt.climateAdaption);
+            this.findFactor('climateAdaptions', cxt.climateAdaption) + (cxt.resentment ? 20 : 0);
         },
         calcCrit: function (cxt) {
           let crit = cxt.weaponCrit + this.findFactor('critUps', cxt.critUp) +
@@ -181,6 +181,7 @@
               <RadioInputRow labelText="連撃の心得" item="chainCrit" state={this.state} items={this.chainCrits} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="北風の狩人/南風の狩人" item="climateAdaption" state={this.state} items={this.climateAdaptions} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="鈍器使い" item="blunt" state={this.state} onChange={this.setForm} setSync={this.setSync} />
+              <CheckboxInputRow labelText="逆恨み" item="resentment" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
                 <div className={labelColClass}>
                   <p>計算結果</p>
