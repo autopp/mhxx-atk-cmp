@@ -77,12 +77,19 @@
           { value: 'up25', factor: 25, text: '1 hit (+25)' },
           { value: 'none', factor: 0, text: 'なし (+0)' },
         ],
+        climateAdaptions: [
+          { value: 'climateAndDrink', factor: 20, text: '北風・クーラードリンク (+20)' },
+          { value: 'climate', factor: 15, text: '北風/南風 (+15)' },
+          { value: 'drink', factor: 5, text: 'クーラードリンク (+5)' },
+          { value: 'none', factor: 0, text: 'なし (+0)' },
+        ],
         getInitialState: function() {
           let leftState = {
             weaponAtk: 300, weaponCrit: 0, sharpness: 'purple',
             possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
             atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
             weakness: false, superCrit: false, reversedCrit: false, chainCrit: 'none',
+            climateAdaption: 'none',
             result: '-'
           };
           let rightState = Object.assign({}, leftState);
@@ -122,7 +129,8 @@
             this.findFactor('permanentItems', cxt.permanentItem) +
             this.findFactor('temporaryItems', cxt.temporaryItem) +
             this.findFactor('foods', cxt.food) + this.findFactor('atkUps', cxt.atkUp) +
-            this.findFactor('leftArmSkills', cxt.leftArmSkill).atk;
+            this.findFactor('leftArmSkills', cxt.leftArmSkill).atk +
+            this.findFactor('climateAdaptions', cxt.climateAdaption);
           var crit = cxt.weaponCrit + this.findFactor('critUps', cxt.critUp) +
             this.findFactor('leftArmSkills', cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0) +
             this.findFactor('chainCrits', cxt.chainCrit);
@@ -158,6 +166,7 @@
               <CheckboxInputRow labelText="超会心" item="superCrit" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="痛恨会心" item="reversedCrit" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="連撃の心得" item="chainCrit" state={this.state} items={this.chainCrits} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="北風の狩人・南風の狩人" item="climateAdaption" state={this.state} items={this.climateAdaptions} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
                 <div className={labelColClass}>
                   <p>計算結果</p>
