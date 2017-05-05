@@ -19,13 +19,13 @@
 
       var App = React.createClass({
         sharpnesses: [
-          { value: 'purple', factor: 1.39, text: '紫 (1.39)' },
-          { value: 'white', factor: 1.32, text: '白 (1.32)' },
-          { value: 'blue', factor: 1.2, text: '青 (1.2)' },
-          { value: 'green', factor: 1.05, text: '緑 (1.05)' },
-          { value: 'yellow', factor: 1.0, text: '黄 (1.0)' },
-          { value: 'orange', factor: 0.75, text: '橙 (0.75)' },
-          { value: 'red', factor: 0.5, text: '赤 (0.5)' }
+          { value: 'purple', factor: { normal: 1.39, blunt: 1 }, text: '紫 (1.39)' },
+          { value: 'white', factor: { normal: 1.32, blunt: 1 }, text: '白 (1.32)' },
+          { value: 'blue', factor: { normal: 1.2, blunt: 1 }, text: '青 (1.2)' },
+          { value: 'green', factor: { normal: 1.05, blunt: 1.1 }, text: '緑 (1.05)' },
+          { value: 'yellow', factor: { normal: 1.0, blunt: 1.15 }, text: '黄 (1.0)' },
+          { value: 'orange', factor: { normal: 0.75, blunt: 1.2 }, text: '橙 (0.75)' },
+          { value: 'red', factor: { normal: 0.5, blunt: 1.2 }, text: '赤 (0.5)' }
         ],
         possessedItems: [
           { value: 'both', factor: 15, text: '爪・護符 (+15)' },
@@ -89,7 +89,7 @@
             possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
             atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
             weakness: false, superCrit: false, reversedCrit: false, chainCrit: 'none',
-            climateAdaption: 'none',
+            climateAdaption: 'none', blunt: false,
             result: '-'
           };
           let rightState = Object.assign({}, leftState);
@@ -127,8 +127,8 @@
           let baseAtk = this.calcAtack(cxt);
           let crit = this.calcCrit(cxt);
           let critFactor = this.calcCritFactor(crit, cxt);
-          let sharpness = this.findFactor('sharpnesses', cxt.sharpness);
-          return (baseAtk) * (1 + crit * critFactor / 100) * sharpness;
+          let sharpnessFactor = this.calcSharpnessFactor(cxt);
+          return (baseAtk) * (1 + crit * critFactor / 100) * sharpnessFactor;
         },
         calcAtack: function (cxt) {
           return cxt.weaponAtk + this.findFactor('possessedItems', cxt.possessedItem) +
@@ -149,6 +149,14 @@
             return cxt.superCrit ? 0.4 : 0.25;
           } else {
             return cxt.reversedCrit ? -1 / 8 : 0.25;
+          }
+        },
+        calcSharpnessFactor: function (cxt) {
+          let factor = this.findFactor('sharpnesses', cxt.sharpness);
+          if (cxt.blunt) {
+            return factor.normal * factor.blunt;
+          } else {
+            return factor.normal;
           }
         },
         findFactor: function (item, value) {
@@ -172,6 +180,7 @@
               <CheckboxInputRow labelText="痛恨会心" item="reversedCrit" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="連撃の心得" item="chainCrit" state={this.state} items={this.chainCrits} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="北風の狩人/南風の狩人" item="climateAdaption" state={this.state} items={this.climateAdaptions} onChange={this.setForm} setSync={this.setSync} />
+              <CheckboxInputRow labelText="鈍器使い" item="blunt" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
                 <div className={labelColClass}>
                   <p>計算結果</p>
