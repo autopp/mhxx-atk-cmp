@@ -93,6 +93,11 @@
           { value: 'white', factor: { atk: 0, crit: 10 }, text: '白 (会心+10)' },
           { value: 'none', factor: { atk: 0, crit: 0 }, text: 'なし (+0)' }
         ],
+        frenzies: [
+          { value: 'antivirus', factor: 30, text: '無我の境地 (+30)' },
+          { value: 'recovered', factor: 15, text: '克服 (+15)' },
+          { value: 'none', factor: 1.0, text: 'なし (+0)' }
+        ],
         getInitialState: function() {
           let leftState = {
             weaponAtk: 300, weaponCrit: 0, sharpness: 'purple',
@@ -100,7 +105,7 @@
             atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
             weakness: false, superCrit: false, reversedCrit: false, chainCrit: 'none',
             climateAdaption: 'none', blunt: false, resentment: false, resuscitate: false,
-            fortify: 'none', adrenaline: false, wideExtract: 'none',
+            fortify: 'none', adrenaline: false, wideExtract: 'none', frenzy: 'none',
             result: '-'
           };
           let rightState = Object.assign({}, leftState);
@@ -165,7 +170,8 @@
           let crit = cxt.weaponCrit + this.findFactor('critUps', cxt.critUp) +
             this.findFactor('leftArmSkills', cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0) +
             this.findFactor('chainCrits', cxt.chainCrit) +
-            this.findFactor('wideExtracts', cxt.wideExtract).crit;
+            this.findFactor('wideExtracts', cxt.wideExtract).crit +
+            this.findFactor('frenzies', cxt.frenzy);
           return Math.min(Math.max(crit, -100), 100);
         },
         calcCritFactor: function (crit, cxt) {
@@ -215,6 +221,7 @@
               <RadioInputRow labelText="不屈" item="fortify" state={this.state} items={this.fortifies} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="火事場力+2" item="adrenaline" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="エキス広域化" item="wideExtract" state={this.state} items={this.wideExtracts} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="狂竜症" item="frenzy" state={this.state} items={this.frenzies} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
                 <div className={labelColClass}>
                   <p>計算結果</p>
