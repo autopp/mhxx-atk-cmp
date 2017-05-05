@@ -19,13 +19,13 @@
 
       var App = React.createClass({
         sharpnesses: [
-          { value: 'purple', factor: { normal: 1.39, blunt: 1 }, text: '紫 (1.39)' },
-          { value: 'white', factor: { normal: 1.32, blunt: 1 }, text: '白 (1.32)' },
-          { value: 'blue', factor: { normal: 1.2, blunt: 1 }, text: '青 (1.2)' },
-          { value: 'green', factor: { normal: 1.05, blunt: 1.1 }, text: '緑 (1.05)' },
-          { value: 'yellow', factor: { normal: 1.0, blunt: 1.15 }, text: '黄 (1.0)' },
-          { value: 'orange', factor: { normal: 0.75, blunt: 1.2 }, text: '橙 (0.75)' },
-          { value: 'red', factor: { normal: 0.5, blunt: 1.2 }, text: '赤 (0.5)' }
+          { value: 'purple', factor: { normal: 139, blunt: 100 }, text: '紫 (1.39)' },
+          { value: 'white', factor: { normal: 132, blunt: 100 }, text: '白 (1.32)' },
+          { value: 'blue', factor: { normal: 120, blunt: 100 }, text: '青 (1.2)' },
+          { value: 'green', factor: { normal: 105, blunt: 110 }, text: '緑 (1.05)' },
+          { value: 'yellow', factor: { normal: 100, blunt: 115 }, text: '黄 (1.0)' },
+          { value: 'orange', factor: { normal: 75, blunt: 120 }, text: '橙 (0.75)' },
+          { value: 'red', factor: { normal: 50, blunt: 120 }, text: '赤 (0.5)' }
         ],
         possessedItems: [
           { value: 'both', factor: 15, text: '爪・護符 (+15)' },
@@ -134,7 +134,7 @@
           let crit = this.calcCrit(cxt);
           let critFactor = this.calcCritFactor(crit, cxt);
           let sharpnessFactor = this.calcSharpnessFactor(cxt);
-          return (baseAtk) * (1 + crit * critFactor / 100) * sharpnessFactor;
+          return (baseAtk) * (100 + crit * critFactor) / 100 * sharpnessFactor / 10000;
         },
         calcAtack: function (cxt) {
           return (
@@ -165,7 +165,7 @@
           if (cxt.blunt) {
             return factor.normal * factor.blunt;
           } else {
-            return factor.normal;
+            return factor.normal * 100;
           }
         },
         findFactor: function (item, value) {
