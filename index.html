@@ -13,92 +13,75 @@
     <script src="js/JSXTransformer.js"></script>
     <script src="js/babel.min.js"></script>
     <script type="text/jsx">
-      var createFormState = function () {
-        return {
-          weaponAtk: 300, weaponCrit: 0, sharpness: 'purple',
-          possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
-          atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
-          weakness: false, superCrit: false,
-          result: '-'
-        };
-      };
-
-      var findFactor = function (ary, value) {
-        return ary.find((x) => x.value === value).factor;
-      };
-
       var labelColClass="col-md-2";
       var inputColClass="col-md-3";
       var syncColClass="col-md-1";
 
-      var sharpnesses = [
-        { value: 'purple', factor: 1.39, text: '紫 (1.39)' },
-        { value: 'white', factor: 1.32, text: '白 (1.32)' },
-        { value: 'blue', factor: 1.2, text: '青 (1.2)' },
-        { value: 'green', factor: 1.05, text: '緑 (1.05)' },
-        { value: 'yellow', factor: 1.0, text: '黄 (1.0)' },
-        { value: 'orange', factor: 0.75, text: '橙 (0.75)' },
-        { value: 'red', factor: 0.5, text: '赤 (0.5)' }
-      ];
-
-      var possessedItems = [
-        { value: 'both', factor: 15, text: '爪・護符 (+15)' },
-        { value: 'claw', factor: 9, text: '爪のみ (+9)' },
-        { value: 'amulet', factor: 6, text: '護符のみ (+6)' },
-        { value: 'none', factor: 0, text: 'なし (+0)' }
-      ];
-
-      var permanentItems = [
-        { value: 'great', factor: 7, text: '鬼人薬グレート (+7)' },
-        { value: 'normal', factor: 5, text: '鬼人薬 (+5)' },
-        { value: 'none', factor: 0, text: 'なし (+0)' }
-      ];
-
-      var temporaryItems = [
-        { value: 'pill', factor: 25, text: '怪力の丸薬 (+25)' },
-        { value: 'seed', factor: 10, text: '怪力の種 (+10)' },
-        { value: 'none', factor: 0, text: 'なし (+0)' }
-      ];
-
-      var foods = [
-        { value: 'large', factor: 7, text: '攻撃力【大】 (+7)' },
-        { value: 'medium', factor: 5, text: '攻撃力【中】 (+5)' },
-        { value: 'small', factor: 3, text: '攻撃力【小】 (+3)' },
-        { value: 'none', factor: 0, text: 'なし (+0)' }
-      ];
-
-      var atkUps = [
-        { value: 'large', factor: 20, text: '攻撃力UP【大】 (+20)' },
-        { value: 'medium', factor: 15, text: '攻撃力UP【中】 (+15)' },
-        { value: 'small', factor: 10, text: '攻撃力UP【小】 (+10)' },
-        { value: 'none', factor: 0, text: 'なし (+0)' }
-      ];
-
-      var critUps = [
-        { value: 'up3', factor: 30, text: '見切り+3 (+30)' },
-        { value: 'up2', factor: 20, text: '見切り+2 (+20)' },
-        { value: 'up1', factor: 10, text: '見切り+1 (+10)' },
-        { value: 'none', factor: 0, text: 'なし (+0)' },
-        { value: 'down1', factor: -5, text: '見切り-1 (-5)' },
-        { value: 'down2', factor: -10, text: '見切り-2 (-10)' },
-        { value: 'down3', factor: -15, text: '見切り-3 (-15)' }
-      ];
-
-      var leftArmSkills = [
-        { value: 'challenger2', factor: { atk: 20, crit: 15 }, text: '挑戦者2 (攻撃+20, 会心+15)' },
-        { value: 'challenger1', factor: { atk: 10, crit: 10 }, text: '挑戦者1 (攻撃+10, 会心+10)' },
-        { value: 'fullCharge', factor: { atk: 20, crit: 0 }, text: 'フルチャージ (攻撃+20)' },
-        { value: 'latentPower2', factor: { atk: 0, crit: 50 }, text: '力の解放2 (会心+50)' },
-        { value: 'latentPower1', factor: { atk: 0, crit: 30 }, text: '力の解放1 (会心+30)' },
-        { value: 'none', factor: { atk: 0, crit: 0 }, text: 'なし (+0)' }
-      ];
-
       var App = React.createClass({
+        sharpnesses: [
+          { value: 'purple', factor: 1.39, text: '紫 (1.39)' },
+          { value: 'white', factor: 1.32, text: '白 (1.32)' },
+          { value: 'blue', factor: 1.2, text: '青 (1.2)' },
+          { value: 'green', factor: 1.05, text: '緑 (1.05)' },
+          { value: 'yellow', factor: 1.0, text: '黄 (1.0)' },
+          { value: 'orange', factor: 0.75, text: '橙 (0.75)' },
+          { value: 'red', factor: 0.5, text: '赤 (0.5)' }
+        ],
+        possessedItems: [
+          { value: 'both', factor: 15, text: '爪・護符 (+15)' },
+          { value: 'claw', factor: 9, text: '爪のみ (+9)' },
+          { value: 'amulet', factor: 6, text: '護符のみ (+6)' },
+          { value: 'none', factor: 0, text: 'なし (+0)' }
+        ],
+        permanentItems: [
+          { value: 'great', factor: 7, text: '鬼人薬グレート (+7)' },
+          { value: 'normal', factor: 5, text: '鬼人薬 (+5)' },
+          { value: 'none', factor: 0, text: 'なし (+0)' }
+        ],
+        temporaryItems: [
+          { value: 'pill', factor: 25, text: '怪力の丸薬 (+25)' },
+          { value: 'seed', factor: 10, text: '怪力の種 (+10)' },
+          { value: 'none', factor: 0, text: 'なし (+0)' }
+        ],
+        foods: [
+          { value: 'large', factor: 7, text: '攻撃力【大】 (+7)' },
+          { value: 'medium', factor: 5, text: '攻撃力【中】 (+5)' },
+          { value: 'small', factor: 3, text: '攻撃力【小】 (+3)' },
+          { value: 'none', factor: 0, text: 'なし (+0)' }
+        ],
+        atkUps: [
+          { value: 'large', factor: 20, text: '攻撃力UP【大】 (+20)' },
+          { value: 'medium', factor: 15, text: '攻撃力UP【中】 (+15)' },
+          { value: 'small', factor: 10, text: '攻撃力UP【小】 (+10)' },
+          { value: 'none', factor: 0, text: 'なし (+0)' }
+        ],
+        critUps: [
+          { value: 'up3', factor: 30, text: '見切り+3 (+30)' },
+          { value: 'up2', factor: 20, text: '見切り+2 (+20)' },
+          { value: 'up1', factor: 10, text: '見切り+1 (+10)' },
+          { value: 'none', factor: 0, text: 'なし (+0)' },
+          { value: 'down1', factor: -5, text: '見切り-1 (-5)' },
+          { value: 'down2', factor: -10, text: '見切り-2 (-10)' },
+          { value: 'down3', factor: -15, text: '見切り-3 (-15)' }
+        ],
+        leftArmSkills: [
+          { value: 'challenger2', factor: { atk: 20, crit: 15 }, text: '挑戦者2 (攻撃+20, 会心+15)' },
+          { value: 'challenger1', factor: { atk: 10, crit: 10 }, text: '挑戦者1 (攻撃+10, 会心+10)' },
+          { value: 'fullCharge', factor: { atk: 20, crit: 0 }, text: 'フルチャージ (攻撃+20)' },
+          { value: 'latentPower2', factor: { atk: 0, crit: 50 }, text: '力の解放2 (会心+50)' },
+          { value: 'latentPower1', factor: { atk: 0, crit: 30 }, text: '力の解放1 (会心+30)' },
+          { value: 'none', factor: { atk: 0, crit: 0 }, text: 'なし (+0)' }
+        ],
         getInitialState: function() {
-          return {
-            left: createFormState(), right: createFormState(),
-            sync: {}
+          let leftState = {
+            weaponAtk: 300, weaponCrit: 0, sharpness: 'purple',
+            possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
+            atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
+            weakness: false, superCrit: false,
+            result: '-'
           };
+          let rightState = Object.assign({}, leftState);
+          return { left: leftState, right: rightState, sync: {} };
         },
         setForm: function (pos, item, value) {
           if (this.state.sync[item]) {
@@ -130,31 +113,34 @@
         },
         calcExpectedAtk: function (cxt) {
           var baseAtk = cxt.weaponAtk +
-            findFactor(possessedItems, cxt.possessedItem) +
-            findFactor(permanentItems, cxt.permanentItem) +
-            findFactor(temporaryItems, cxt.temporaryItem) +
-            findFactor(foods, cxt.food) + findFactor(atkUps, cxt.atkUp) +
-            findFactor(leftArmSkills, cxt.leftArmSkill).atk;
-          var crit = cxt.weaponCrit + findFactor(critUps, cxt.critUp) +
-            findFactor(leftArmSkills, cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0);
+            this.findFactor('possessedItems', cxt.possessedItem) +
+            this.findFactor('permanentItems', cxt.permanentItem) +
+            this.findFactor('temporaryItems', cxt.temporaryItem) +
+            this.findFactor('foods', cxt.food) + this.findFactor('atkUps', cxt.atkUp) +
+            this.findFactor('leftArmSkills', cxt.leftArmSkill).atk;
+          var crit = cxt.weaponCrit + this.findFactor('critUps', cxt.critUp) +
+            this.findFactor('leftArmSkills', cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0);
           crit = Math.min(Math.max(crit, -100), 100);
           let critFactor = crit >= 0 && cxt.superCrit ? 0.4 : 0.25;
-          let sharpness = findFactor(sharpnesses, cxt.sharpness);
+          let sharpness = this.findFactor('sharpnesses', cxt.sharpness);
           return (baseAtk) * (1 + crit * critFactor / 100) * sharpness;
+        },
+        findFactor: function (item, value) {
+          return this[item].find((x) => x.value === value).factor;
         },
         render: function () {
           return (
             <div className="container">
               <NumberInputRow labelText="武器攻撃力" item="weaponAtk" state={this.state} min={0} max={1000} step={10} onChange={this.setForm} setSync={this.setSync} />
               <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} min={-100} max={100} step={5} onChange={this.setForm} setSync={this.setSync} />
-              <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} items={sharpnesses} onChange={this.setForm} setSync={this.setSync} />
-              <RadioInputRow labelText="護符・爪" item="possessedItem" state={this.state} items={possessedItems} onChange={this.setForm} setSync={this.setSync} />
-              <RadioInputRow labelText="鬼人薬" item="permanentItem" state={this.state} items={permanentItems} onChange={this.setForm} setSync={this.setSync} />
-              <RadioInputRow labelText="種・丸薬" item="temporaryItem" state={this.state} items={temporaryItems} onChange={this.setForm} setSync={this.setSync} />
-              <RadioInputRow labelText="食事" item="food" state={this.state} items={foods} onChange={this.setForm} setSync={this.setSync} />
-              <RadioInputRow labelText="攻撃力UP" item="atkUp" state={this.state} items={atkUps} onChange={this.setForm} setSync={this.setSync} />
-              <RadioInputRow labelText="見切り" item="critUp" state={this.state} items={critUps} onChange={this.setForm} setSync={this.setSync} />
-              <RadioInputRow labelText="挑戦者・フルチャージ・力の解放" item="leftArmSkill" state={this.state} items={leftArmSkills} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} items={this.sharpnesses} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="護符・爪" item="possessedItem" state={this.state} items={this.possessedItems} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="鬼人薬" item="permanentItem" state={this.state} items={this.permanentItems} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="種・丸薬" item="temporaryItem" state={this.state} items={this.temporaryItems} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="食事" item="food" state={this.state} items={this.foods} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="攻撃力UP" item="atkUp" state={this.state} items={this.atkUps} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="見切り" item="critUp" state={this.state} items={this.critUps} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="挑戦者・フルチャージ・力の解放" item="leftArmSkill" state={this.state} items={this.leftArmSkills} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="弱点特効" item="weakness" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="超会心" item="superCrit" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
