@@ -149,104 +149,13 @@
               <NumberInputRow labelText="武器攻撃力" item="weaponAtk" state={this.state} min={0} max={1000} step={10} onChange={this.setForm} setSync={this.setSync} />
               <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} min={-100} max={100} step={5} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} items={sharpnesses} onChange={this.setForm} setSync={this.setSync} />
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>爪・護符</p>
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="left" item="possessedItem" value={this.state.left.possessedItem} items={possessedItems} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="possessedItem" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="right" item="possessedItem" value={this.state.right.possessedItem} items={possessedItems} onChange={this.setForm} />
-                </div>
-              </div>
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>鬼人薬</p>
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="left" item="permanentItem" value={this.state.left.permanentItem} items={permanentItems} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="permanentItem" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="right" item="permanentItem" value={this.state.right.permanentItem} items={permanentItems} onChange={this.setForm} />
-                </div>
-              </div>
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>種・丸薬</p>
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="left" item="temporaryItem" value={this.state.left.temporaryItem} items={temporaryItems} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="temporaryItem" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="right" item="temporaryItem" value={this.state.right.temporaryItem} items={temporaryItems} onChange={this.setForm} />
-                </div>
-              </div>
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>食事</p>
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="left" item="food" value={this.state.left.food} items={foods} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="food" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="right" item="food" value={this.state.right.food} items={foods} onChange={this.setForm} />
-                </div>
-              </div>
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>攻撃力UP</p>
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="left" item="atkUp" value={this.state.left.atkUp} items={atkUps} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="atkUp" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="right" item="atkUp" value={this.state.right.atkUp} items={atkUps} onChange={this.setForm} />
-                </div>
-              </div>
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>達人</p>
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="left" item="critUp" value={this.state.left.critUp} items={critUps} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="critUp" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="right" item="critUp" value={this.state.right.critUp} items={critUps} onChange={this.setForm} />
-                </div>
-              </div>
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>闘魂・無傷・本気</p>
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="left" item="leftArmSkill" value={this.state.left.leftArmSkill} items={leftArmSkills} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="leftArmSkill" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <RadioInput pos="right" item="leftArmSkill" value={this.state.right.leftArmSkill} items={leftArmSkills} onChange={this.setForm} />
-                </div>
-              </div>
+              <RadioInputRow labelText="護符・爪" item="possessedItem" state={this.state} items={possessedItems} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="鬼人薬" item="permanentItem" state={this.state} items={permanentItems} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="種・丸薬" item="temporaryItem" state={this.state} items={temporaryItems} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="食事" item="food" state={this.state} items={foods} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="攻撃力UP" item="atkUp" state={this.state} items={atkUps} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="見切り" item="critUp" state={this.state} items={critUps} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="挑戦者・フルチャージ・力の解放" item="leftArmSkill" state={this.state} items={leftArmSkills} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
                 <div className={labelColClass}>
                   <p>弱点特効</p>
