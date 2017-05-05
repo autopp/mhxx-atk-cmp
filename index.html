@@ -15,7 +15,7 @@
     <script type="text/jsx">
       var labelColClass="col-lg-2";
       var inputColClass="col-lg-4 center";
-      var syncColClass="col-lg-1 center";
+      var syncColClass="col-lg-2 center";
 
       var App = React.createClass({
         sharpnesses: [
@@ -99,7 +99,9 @@
             result: '-'
           };
           let rightState = Object.assign({}, leftState);
-          return { left: leftState, right: rightState, sync: {} };
+          let sync = {};
+          Object.keys(leftState).forEach((key) => { sync[key] = false; });
+          return { left: leftState, right: rightState, sync: sync };
         },
         setForm: function (pos, item, value) {
           if (this.state.sync[item]) {
@@ -128,6 +130,12 @@
             updated.right = right;
           }
           this.setState(updated);
+        },
+        syncAll: function () {
+          let newSyncs = {};
+          Object.keys(this.state.sync).forEach((key) => { console.log(key); newSyncs[key] = true; });
+          console.log(newSyncs);
+          this.setState({ sync: newSyncs });
         },
         calcExpectedAtk: function (cxt) {
           let baseAtk = this.calcAtack(cxt);
@@ -204,6 +212,11 @@
                 <div className={syncColClass}></div>
                 <div className={inputColClass}>
                   <Result result={this.state.right.result} />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-2 col-lg-offset-6 center">
+                  <button type="button" className="btn btn-success btn-xs" onClick={this.syncAll}>Sync all</button>
                 </div>
               </div>
             </div>
