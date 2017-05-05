@@ -17,7 +17,7 @@
         return {
           weaponAtk: 0, weaponCrit: 0, sharpness: 'purple',
           possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
-          atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
+          atkUp: 'none', critUp: 'none', leftArmSkill: 'none', weakness: false,
           result: '-'
         };
       };
@@ -34,7 +34,7 @@
           findFactor(foods, cxt.food) + findFactor(atkUps, cxt.atkUp) +
           findFactor(leftArmSkills, cxt.leftArmSkill).atk;
         var crit = cxt.weaponCrit + findFactor(critUps, cxt.critUp) +
-          findFactor(leftArmSkills, cxt.leftArmSkill).crit;
+          findFactor(leftArmSkills, cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0);
         crit = Math.min(Math.max(crit, -100), 100);
         var sharpness = findFactor(sharpnesses, cxt.sharpness);
         return (baseAtk) * (1 + crit * 0.25 / 100) * sharpness;
@@ -286,6 +286,20 @@
               </div>
               <div className="row">
                 <div className={labelColClass}>
+                  <p>弱点特効</p>
+                </div>
+                <div className={inputColClass}>
+                  <CheckboxInput pos="left" item="weakness" value={this.state.left.weakness} onChange={this.setForm} />
+                </div>
+                <div className={syncColClass}>
+                  <SyncInputs item="weakness" onChange={this.setSync} />
+                </div>
+                <div className={inputColClass}>
+                  <CheckboxInput pos="right" item="weakness" value={this.state.right.weakness} onChange={this.setForm} />
+                </div>
+              </div>
+              <div className="row">
+                <div className={labelColClass}>
                   <p>計算結果</p>
                 </div>
                 <div className={inputColClass}>
@@ -333,6 +347,16 @@
           });
 
           return <div>{items}</div>;
+        }
+      });
+
+      var CheckboxInput = React.createClass({
+        _onChange: function (e) {
+          this.props.onChange(this.props.pos, this.props.item, e.target.checked);
+        },
+
+        render: function () {
+          return <input type="checkbox" data-item={this.props.item} onChange={this._onChange} checked={this.props.value} />;
         }
       });
 
