@@ -83,6 +83,11 @@
           { value: 'drink', factor: 5, text: 'クーラードリンク (+5)' },
           { value: 'none', factor: 0, text: 'なし (+0)' },
         ],
+        fortifies: [
+          { value: 'two', factor: 1.2, text: '2回 (1.2)' },
+          { value: 'one', factor: 1.1, text: '1回 (1.1)' },
+          { value: 'none', factor: 1.0, text: 'なし (1.0)' },
+        ],
         getInitialState: function() {
           let leftState = {
             weaponAtk: 300, weaponCrit: 0, sharpness: 'purple',
@@ -90,6 +95,7 @@
             atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
             weakness: false, superCrit: false, reversedCrit: false, chainCrit: 'none',
             climateAdaption: 'none', blunt: false, resentment: false, resuscitate: false,
+            fortify: 'none',
             result: '-'
           };
           let rightState = Object.assign({}, leftState);
@@ -131,13 +137,15 @@
           return (baseAtk) * (1 + crit * critFactor / 100) * sharpnessFactor;
         },
         calcAtack: function (cxt) {
-          return cxt.weaponAtk + this.findFactor('possessedItems', cxt.possessedItem) +
+          return (
+            cxt.weaponAtk + this.findFactor('possessedItems', cxt.possessedItem) +
             this.findFactor('permanentItems', cxt.permanentItem) +
             this.findFactor('temporaryItems', cxt.temporaryItem) +
             this.findFactor('foods', cxt.food) + this.findFactor('atkUps', cxt.atkUp) +
             this.findFactor('leftArmSkills', cxt.leftArmSkill).atk +
             this.findFactor('climateAdaptions', cxt.climateAdaption) +
-            (cxt.resentment ? 20 : 0) + (cxt.resuscitate ? 20 : 0);
+            (cxt.resentment ? 20 : 0) + (cxt.resuscitate ? 20 : 0)
+          ) * this.findFactor('fortifies', cxt.fortify);
         },
         calcCrit: function (cxt) {
           let crit = cxt.weaponCrit + this.findFactor('critUps', cxt.critUp) +
@@ -184,6 +192,7 @@
               <CheckboxInputRow labelText="鈍器使い" item="blunt" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="逆恨み" item="resentment" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="死中に活" item="resuscitate" state={this.state} onChange={this.setForm} setSync={this.setSync} />
+              <RadioInputRow labelText="不屈" item="fortify" state={this.state} items={this.fortifies} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
                 <div className={labelColClass}>
                   <p>計算結果</p>
