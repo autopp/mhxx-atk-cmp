@@ -233,7 +233,7 @@
                 <NumberInput pos="left" item={this.props.item} value={this.props.state.left[this.props.item]} min={this.props.min} max={this.props.max} step={this.props.step} onChange={this.props.onChange} />
               </div>
               <div className={syncColClass}>
-                <SyncInputs item="weaponAtk" onChange={this.props.setSync} />
+                <SyncInputs item={this.props.item} onChange={this.props.setSync} />
               </div>
               <div className={inputColClass}>
                 <NumberInput pos="right" item={this.props.item} value={this.props.state.right[this.props.item]} min={this.props.min} max={this.props.max} step={this.props.step} onChange={this.props.onChange} />
@@ -268,7 +268,7 @@
                 <RadioInput pos="left" item={this.props.item} value={this.props.state.left[this.props.item]} items={this.props.items} onChange={this.props.onChange} />
               </div>
               <div className={syncColClass}>
-                <SyncInputs item="sharpness" onChange={this.props.setSync} />
+                <SyncInputs item={this.props.item} onChange={this.props.setSync} />
               </div>
               <div className={inputColClass}>
                 <RadioInput pos="right" item={this.props.item} value={this.props.state.right[this.props.item]} items={this.props.items} onChange={this.props.onChange} />
