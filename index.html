@@ -156,34 +156,8 @@
               <RadioInputRow labelText="攻撃力UP" item="atkUp" state={this.state} items={atkUps} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="見切り" item="critUp" state={this.state} items={critUps} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="挑戦者・フルチャージ・力の解放" item="leftArmSkill" state={this.state} items={leftArmSkills} onChange={this.setForm} setSync={this.setSync} />
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>弱点特効</p>
-                </div>
-                <div className={inputColClass}>
-                  <CheckboxInput pos="left" item="weakness" value={this.state.left.weakness} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="weakness" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <CheckboxInput pos="right" item="weakness" value={this.state.right.weakness} onChange={this.setForm} />
-                </div>
-              </div>
-              <div className="row">
-                <div className={labelColClass}>
-                  <p>超会心</p>
-                </div>
-                <div className={inputColClass}>
-                  <CheckboxInput pos="left" item="superCrit" value={this.state.left.superCrit} onChange={this.setForm} />
-                </div>
-                <div className={syncColClass}>
-                  <SyncInputs item="superCrit" onChange={this.setSync} />
-                </div>
-                <div className={inputColClass}>
-                  <CheckboxInput pos="right" item="superCrit" value={this.state.right.superCrit} onChange={this.setForm} />
-                </div>
-              </div>
+              <CheckboxInputRow labelText="弱点特効" item="weakness" state={this.state} onChange={this.setForm} setSync={this.setSync} />
+              <CheckboxInputRow labelText="超会心" item="superCrit" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
                 <div className={labelColClass}>
                   <p>計算結果</p>
@@ -287,6 +261,27 @@
           return <input type="checkbox" data-item={this.props.item} onChange={this._onChange} checked={this.props.value} />;
         }
       });
+
+      var CheckboxInputRow = React.createClass({
+        render: function () {
+          return (
+            <div className="row">
+              <div className={labelColClass}>
+                <p>{this.props.labelText}</p>
+              </div>
+              <div className={inputColClass}>
+                <CheckboxInput pos="left" item={this.props.item} value={this.props.state.left[this.props.item]} onChange={this.props.onChange} />
+              </div>
+              <div className={syncColClass}>
+                <SyncInputs item={this.props.item} onChange={this.props.setSync} />
+              </div>
+              <div className={inputColClass}>
+                <CheckboxInput pos="right" item={this.props.item} value={this.props.state.right[this.props.item]} onChange={this.props.onChange} />
+              </div>
+            </div>
+          );
+        }
+      })
 
       var Result = React.createClass({
         render: function () {
