@@ -96,7 +96,7 @@
         frenzies: [
           { value: 'antivirus', factor: 30, text: '無我の境地 (+30)' },
           { value: 'recovered', factor: 15, text: '克服 (+15)' },
-          { value: 'none', factor: 1.0, text: 'なし (+0)' }
+          { value: 'none', factor: 0, text: 'なし (+0)' }
         ],
         getInitialState: function() {
           let leftState = {
@@ -143,8 +143,7 @@
         },
         syncAll: function () {
           let newSyncs = {};
-          Object.keys(this.state.sync).forEach((key) => { console.log(key); newSyncs[key] = true; });
-          console.log(newSyncs);
+          Object.keys(this.state.sync).forEach((key) => { newSyncs[key] = true; });
           this.setState({ sync: newSyncs });
         },
         calcExpectedAtk: function (cxt) {
