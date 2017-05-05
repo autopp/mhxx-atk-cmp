@@ -200,13 +200,16 @@
                   <h1>MHXX Atack Comparator</h1>
                 </div>
               </div>
+              <SectionRow text="武器" />
               <NumberInputRow labelText="武器攻撃力" item="weaponAtk" state={this.state} min={0} max={1000} step={10} onChange={this.setForm} setSync={this.setSync} />
               <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} min={-100} max={100} step={5} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} items={this.sharpnesses} onChange={this.setForm} setSync={this.setSync} />
+              <SectionRow text="アイテム・食事" />
               <RadioInputRow labelText="護符・爪" item="possessedItem" state={this.state} items={this.possessedItems} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="鬼人薬" item="permanentItem" state={this.state} items={this.permanentItems} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="種・丸薬" item="temporaryItem" state={this.state} items={this.temporaryItems} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="食事" item="food" state={this.state} items={this.foods} onChange={this.setForm} setSync={this.setSync} />
+              <SectionRow text="スキル" />
               <RadioInputRow labelText="攻撃力UP" item="atkUp" state={this.state} items={this.atkUps} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="見切り" item="critUp" state={this.state} items={this.critUps} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="挑戦者/フルチャージ/力の解放" item="leftArmSkill" state={this.state} items={this.leftArmSkills} onChange={this.setForm} setSync={this.setSync} />
@@ -241,6 +244,16 @@
               </div>
             </div>
           );
+        }
+      });
+
+      var SectionRow = React.createClass({
+        render: function () {
+          return (
+            <div className="row">
+              <div className="col-lg-6"><h3>{this.props.text}</h3></div>
+            </div>
+          )
         }
       });
 
