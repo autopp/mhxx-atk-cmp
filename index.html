@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
   <body>
-    <h1 class="center">MHXX Atack Comparator</h1>
     <div id="app"></div>
     <script src="js/react.min.js"></script>
     <script src="js/JSXTransformer.js"></script>
@@ -190,6 +189,11 @@
         render: function () {
           return (
             <div className="container">
+              <div className="row">
+                <div className="col-lg-6">
+                  <h1>MHXX Atack Comparator</h1>
+                </div>
+              </div>
               <NumberInputRow labelText="武器攻撃力" item="weaponAtk" state={this.state} min={0} max={1000} step={10} onChange={this.setForm} setSync={this.setSync} />
               <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} min={-100} max={100} step={5} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} items={this.sharpnesses} onChange={this.setForm} setSync={this.setSync} />
