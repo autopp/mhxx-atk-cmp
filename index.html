@@ -77,7 +77,7 @@
             weaponAtk: 300, weaponCrit: 0, sharpness: 'purple',
             possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
             atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
-            weakness: false, superCrit: false,
+            weakness: false, superCrit: false, reversedCrit: false,
             result: '-'
           };
           let rightState = Object.assign({}, leftState);
@@ -121,9 +121,16 @@
           var crit = cxt.weaponCrit + this.findFactor('critUps', cxt.critUp) +
             this.findFactor('leftArmSkills', cxt.leftArmSkill).crit + (cxt.weakness ? 50 : 0);
           crit = Math.min(Math.max(crit, -100), 100);
-          let critFactor = crit >= 0 && cxt.superCrit ? 0.4 : 0.25;
+          let critFactor = this.calcCritFactor(crit, cxt);
           let sharpness = this.findFactor('sharpnesses', cxt.sharpness);
           return (baseAtk) * (1 + crit * critFactor / 100) * sharpness;
+        },
+        calcCritFactor: function (crit, cxt) {
+          if (crit >= 0) {
+            return cxt.superCrit ? 0.4 : 0.25;
+          } else {
+            return cxt.reversedCrit ? -1 / 8 : 0.25;
+          }
         },
         findFactor: function (item, value) {
           return this[item].find((x) => x.value === value).factor;
@@ -143,6 +150,7 @@
               <RadioInputRow labelText="挑戦者・フルチャージ・力の解放" item="leftArmSkill" state={this.state} items={this.leftArmSkills} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="弱点特効" item="weakness" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <CheckboxInputRow labelText="超会心" item="superCrit" state={this.state} onChange={this.setForm} setSync={this.setSync} />
+              <CheckboxInputRow labelText="痛恨会心" item="reversedCrit" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <div className="row">
                 <div className={labelColClass}>
                   <p>計算結果</p>
