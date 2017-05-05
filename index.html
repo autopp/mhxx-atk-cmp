@@ -261,7 +261,7 @@
 
         render: function () {
           var items = this.props.items.map((item) => {
-            return <label><input type="radio" name={`${this.props.pos}.${this.props.item}`} value={item.value} checked={this.props.value === item.value} onChange={this._onChange}>{item.text}</input></label>;
+            return <label className="radioButton"><input type="radio" name={`${this.props.pos}.${this.props.item}`} value={item.value} checked={this.props.value === item.value} onChange={this._onChange}>{item.text}</input></label>;
           });
 
           return <div>{items}</div>;

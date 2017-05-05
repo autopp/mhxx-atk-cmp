@@ -1,3 +1,11 @@
 .center {
   text-align: center;
 }
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+label.radioButton {
+  margin-right: 5px;
+}
