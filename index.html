@@ -117,6 +117,9 @@
             fortify: 'none', adrenaline: false, wideExtract: 'none', frenzy: 'none'
           };
         },
+        getStateKeys: function () {
+          return Object.keys(this.getDefaultState());
+        },
         getStateTypes: function () {
           let state = this.getDefaultState();
           let types = {};
@@ -231,6 +234,19 @@
         findFactor: function (item, value) {
           return this[item].find((x) => x.value === value).factor;
         },
+        genQueryParameter: function () {
+          let ary = [];
+          let itemKeys = this.getStateKeys();
+          ['left', 'right'].forEach((pos) => {
+            for (let item in this.state[pos]) {
+              if (itemKeys.indexOf(item) < 0) {
+                continue;
+              }
+              ary.push(`${pos}_${item}=${encodeURIComponent(this.state[pos][item])}`)
+            }
+          });
+          return `?${ary.join('&')}`
+        },
         render: function () {
           return (
             <div className="container">
@@ -283,6 +299,10 @@
               </div>
             </div>
           );
+        },
+        componentDidUpdate: function (_prevProps, _prevState) {
+          let qry = this.genQueryParameter();
+          history.replaceState('', '', qry);
         }
       });
 
