@@ -114,8 +114,7 @@
             atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
             weakness: false, superCrit: false, reversedCrit: false, chainCrit: 'none',
             climateAdaption: 'none', blunt: false, resentment: false, resuscitate: false,
-            fortify: 'none', adrenaline: false, wideExtract: 'none', frenzy: 'none',
-            result: '-'
+            fortify: 'none', adrenaline: false, wideExtract: 'none', frenzy: 'none'
           };
         },
         getStateTypes: function () {
@@ -163,13 +162,10 @@
             var left = this.state.left;
             var right = this.state.right;
             left[item] = right[item] = value;
-            left.result = this.calcExpectedAtk(left);
-            right.result = this.calcExpectedAtk(right);
             this.setState({ left: left, right: right });
           } else {
             var state = this.state[pos];
             state[item] = value;
-            state.result = this.calcExpectedAtk(state);
             this.setState({ [pos]: state });
           }
         },
@@ -181,7 +177,6 @@
           if (value === true) {
             var right = state.right;
             right[item] = state.left[item];
-            right.result = this.calcExpectedAtk(right);
             updated.right = right;
           }
           this.setState(updated);
@@ -274,11 +269,11 @@
                   <p>計算結果</p>
                 </div>
                 <div className={inputColClass}>
-                  <Result result={this.state.left.result} />
+                  <Result result={this.calcExpectedAtk(this.state.left)} />
                 </div>
                 <div className={syncColClass}></div>
                 <div className={inputColClass}>
-                  <Result result={this.state.right.result} />
+                  <Result result={this.calcExpectedAtk(this.state.right)} />
                 </div>
               </div>
               <div className="row">
