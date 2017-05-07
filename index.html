@@ -280,12 +280,7 @@
               <CheckboxInputRow labelText="火事場力+2" item="adrenaline" state={this.state} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="エキス広域化" item="wideExtract" state={this.state} items={this.wideExtracts} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="狂竜症" item="frenzy" state={this.state} items={this.frenzies} onChange={this.setForm} setSync={this.setSync} />
-              <ResultRow leftResult={this.calcExpectedAtk(this.state.left)} rightResult={this.calcExpectedAtk(this.state.right)} />
-              <div className="row">
-                <div className="col-lg-2 col-lg-offset-6 center">
-                  <button type="button" className="btn btn-success btn-xs" onClick={this.syncAll}>Sync all</button>
-                </div>
-              </div>
+              <ResultRow leftResult={this.calcExpectedAtk(this.state.left)} rightResult={this.calcExpectedAtk(this.state.right)} onClick={this.syncAll} />
             </div>
           );
         },
@@ -429,14 +424,16 @@
       var ResultRow = React.createClass({
         render: function () {
           return (
-            <div className="row">
+            <div className="row resultRow">
               <div className={labelColClass}>
                 <p>計算結果</p>
               </div>
               <div className={inputColClass}>
                 <Result result={this.props.leftResult} />
               </div>
-              <div className={syncColClass}></div>
+              <div className={syncColClass}>
+                <button type="button" className="btn btn-success btn-xs" onClick={this.props.onClick}>Sync all</button>
+              </div>
               <div className={inputColClass}>
                 <Result result={this.props.rightResult} />
               </div>

@@ -18,8 +18,11 @@ button.sync-button {
   text-align: center;
 }
 
-.inputRow {
+.inputRow, .resultRow {
   padding-top: 5px;
   padding-bottom: 3px;
+}
+
+.inputRow {
   border-bottom: thin dashed;
 }
