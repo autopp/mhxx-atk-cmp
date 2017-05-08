@@ -118,7 +118,7 @@
           let rightState = Object.assign(this.getDefaultState(), right);
           let sync = {};
           Object.keys(leftState).forEach((key) => { sync[key] = false; });
-          return { left: leftState, right: rightState, sync: sync };
+          return { weapon: 'greatSword', left: leftState, right: rightState, sync: sync };
         },
         getDefaultState: function () {
           return {
@@ -172,6 +172,9 @@
           default:
             return undefined;
           }
+        },
+        setWeapon: function (value) {
+          this.setState({ weapon: value });
         },
         setForm: function (pos, item, value) {
           if (this.state.sync[item]) {
@@ -269,7 +272,7 @@
                 </div>
               </div>
               <SectionRow text="武器" />
-              <WeaponRow item="weapon" items={this.weapons} />
+              <WeaponRow item="weapon" items={this.weapons} value={this.state.weapon} onChange={this.setWeapon} />
               <NumberInputRow labelText="武器攻撃力" item="weaponAtk" state={this.state} min={0} max={1000} step={10} onChange={this.setForm} setSync={this.setSync} />
               <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} min={-100} max={100} step={5} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} items={this.sharpnesses} onChange={this.setForm} setSync={this.setSync} />
@@ -315,6 +318,9 @@
       });
 
       var WeaponRow = React.createClass({
+        _onChange: function (e) {
+          this.props.onChange(e.target.value);
+        },
         render: function () {
           var items = this.props.items.map((item) => {
             return <label className="radioButton"><input type="radio" name={`${this.props.item}`} value={item.value} checked={this.props.value === item.value} onChange={this._onChange}>{item.text}</input></label>;
