@@ -17,6 +17,19 @@
       var syncColClass="col-lg-2 center";
 
       var App = React.createClass({
+        weapons: [
+          { value: 'greatSword', text: '大剣' },
+          { value: 'longSword', text: '太刀' },
+          { value: 'swordAndShield', text: '片手剣' },
+          { value: 'dualSword', text: '双剣' },
+          { value: 'hammer', text: 'ハンマー' },
+          { value: 'huntingHorn', text: '狩猟笛' },
+          { value: 'Lance', text: 'ランス' },
+          { value: 'gunlance', text: 'ガンランス' },
+          { value: 'switchAxe', text: 'スラッシュアックス' },
+          { value: 'chargeBlade', text: 'チャージアックス' },
+          { value: 'insectGlaive', text: '操虫棍' }
+        ],
         sharpnesses: [
           { value: 'purple', factor: { normal: 139, blunt: 100 }, text: '紫 (1.39)' },
           { value: 'white', factor: { normal: 132, blunt: 100 }, text: '白 (1.32)' },
@@ -256,6 +269,7 @@
                 </div>
               </div>
               <SectionRow text="武器" />
+              <WeaponRow item="weapon" items={this.weapons} />
               <NumberInputRow labelText="武器攻撃力" item="weaponAtk" state={this.state} min={0} max={1000} step={10} onChange={this.setForm} setSync={this.setSync} />
               <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} min={-100} max={100} step={5} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} items={this.sharpnesses} onChange={this.setForm} setSync={this.setSync} />
@@ -299,6 +313,22 @@
           )
         }
       });
+
+      var WeaponRow = React.createClass({
+        render: function () {
+          var items = this.props.items.map((item) => {
+            return <label className="radioButton"><input type="radio" name={`${this.props.item}`} value={item.value} checked={this.props.value === item.value} onChange={this._onChange}>{item.text}</input></label>;
+          });
+
+          return (
+            <div className="row inputRow">
+              <div className="col-lg-12 center">
+                {items}
+              </div>
+            </div>
+          );
+        }
+      })
 
       var SyncInputs = React.createClass({
         _onClick: function (e) {
