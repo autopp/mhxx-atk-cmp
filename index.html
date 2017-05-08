@@ -258,7 +258,7 @@
           return obj ? obj.factor : undefined;
         },
         genQueryParameter: function () {
-          let ary = [];
+          let ary = [`weapon=${encodeURIComponent(this.state.weapon)}`];
           let itemKeys = this.getStateKeys();
           ['left', 'right'].forEach((pos) => {
             for (let item in this.state[pos]) {
