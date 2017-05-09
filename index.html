@@ -305,6 +305,7 @@
               <RadioInputRow labelText="エキス広域化" item="wideExtract" state={this.state} items={this.wideExtracts} onChange={this.setForm} setSync={this.setSync} />
               <RadioInputRow labelText="狂竜症" item="frenzy" state={this.state} items={this.frenzies} onChange={this.setForm} setSync={this.setSync} />
               <ResultRow leftResult={this.calcExpectedAtk(this.state.left)} rightResult={this.calcExpectedAtk(this.state.right)} onClick={this.syncAll} />
+              <SectionRow text="武器種別" />
             </div>
           );
         },
