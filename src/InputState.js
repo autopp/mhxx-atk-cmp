@@ -1,33 +1,6 @@
 class InputState {
   constructor(obj) {
-    this.weaponAtk = 300;
-    this.weaponCrit = 0;
-    this.sharpness = 'purple';
-
-    this.possessedItem = 'both';
-    this.permanentItem = 'none';
-    this.temporaryItem = 'none';
-    this.food = 'none';
-
-    this.atkUp = 'none';
-    this.critUp = 'none';
-    this.leftArmSkill = 'none';
-
-    this.weakness = false;
-    this.superCrit = false;
-    this.reversedCrit = false;
-    this.chainCrit = 'none';
-
-    this.climateAdaption = 'none';
-    this.blunt = false;
-    this.resentment = false;
-    this.resuscitate = false;
-
-    this.fortify = 'none';
-    this.adrenaline = false;
-    this.wideExtract = 'none';
-    this.frenzy = 'none';
-
+    Object.assign(this, InputState.defaultState);
     for (let k in this) {
       let v = obj[k];
       if (typeof(v) !== 'undefined') {
@@ -36,5 +9,14 @@ class InputState {
     }
   }
 }
+
+InputState.defaultState = {
+  weaponAtk: 300, weaponCrit: 0, sharpness: 'purple',
+  possessedItem: 'both', permanentItem: 'none', temporaryItem: 'none', food: 'none',
+  atkUp: 'none', critUp: 'none', leftArmSkill: 'none',
+  weakness: false, superCrit: false, reversedCrit: false, chainCrit: 'none',
+  climateAdaption: 'none', blunt: false, resentment: false, resuscitate: false,
+  fortify: 'none', adrenaline: false, wideExtract: 'none', frenzy: 'none'
+};
 
 export default InputState;
