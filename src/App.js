@@ -21,10 +21,14 @@ class App extends Component {
   setWeapon = (weapon) => this.setState({ weapon: weapon })
   constructor(props) {
     super(props);
+
+    let sync = {};
+    InputState.stateKeys.forEach(key => sync[key] = false);
+
     this.state = {
       weapon: 'greatSword',
       left: new InputState({}), right: new InputState({}),
-      sync: {}
+      sync: sync
     };
   }
   render() {
