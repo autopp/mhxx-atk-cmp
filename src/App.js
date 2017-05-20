@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import InputState from './InputState';
 import WeaponRow from './WeaponRow';
 import SectionRow from './SectionRow';
 import './App.css';
@@ -17,6 +18,15 @@ class App extends Component {
     { value: 'chargeBlade', factor: {}, text: 'チャージアックス' },
     { value: 'insectGlaive', factor: {}, text: '操虫棍' }
   ]
+  setWeapon = (weapon) => this.setState({ weapon: weapon })
+  constructor(props) {
+    super(props);
+    this.state = {
+      weapon: 'greatSword',
+      left: new InputState({}), right: new InputState({}),
+      sync: {}
+    };
+  }
   render() {
     return (
       <div className="container">
@@ -26,7 +36,7 @@ class App extends Component {
           </div>
         </div>
         <SectionRow text="武器" />
-        <WeaponRow item="weapon" weapons={this.weapons} value="greatSword" onChange={null} />
+        <WeaponRow item="weapon" weapons={this.weapons} value={this.state.weapon} onChange={this.setWeapon} />
       </div>
     );
   }
