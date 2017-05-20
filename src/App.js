@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SyncInput from './SyncInput'
 
 class App extends Component {
   render() {
