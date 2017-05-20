@@ -19,4 +19,13 @@ InputState.defaultState = {
   fortify: 'none', adrenaline: false, wideExtract: 'none', frenzy: 'none'
 };
 
+InputState.stateKeys = Object.keys(InputState.defaultState);
+InputState.stateTypes = (() => {
+  let types = {};
+  for (let key in InputState.defaultState) {
+    types[key] = typeof(InputState.defaultState[key]);
+  }
+  return types;
+})();
+
 export default InputState;
