@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import WeaponRow from './WeaponRow'
-import './App.css'
+import WeaponRow from './WeaponRow';
+import SectionRow from './SectionRow';
+import './App.css';
 
 class App extends Component {
   weapons = [
@@ -24,6 +25,7 @@ class App extends Component {
             <h1>MHXX Atack Comparator</h1>
           </div>
         </div>
+        <SectionRow text="武器" />
         <WeaponRow item="weapon" weapons={this.weapons} value="greatSword" onChange={null} />
       </div>
     );
