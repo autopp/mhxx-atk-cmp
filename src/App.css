@@ -1,24 +1,28 @@
-.App {
+.center {
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+input[type="radio"] {
+  margin-right: 5px;
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+label.radioButton {
+  margin-right: 5px;
 }
 
-.App-intro {
-  font-size: large;
+button.sync-button {
+  /*margin-bottom: 3px;*/
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.sync-col {
+  text-align: center;
+}
+
+.inputRow, .resultRow {
+  padding-top: 5px;
+  padding-bottom: 3px;
+}
+
+.inputRow {
+  border-bottom: thin dashed;
 }
