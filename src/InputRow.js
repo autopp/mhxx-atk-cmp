@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SyncInput from './SyncInput';
 
 class InputRow extends Component {
   render() {
@@ -13,7 +14,7 @@ class InputRow extends Component {
           {React.createElement(inputClass, Object.assign({ pos: 'left', item: item, value: this.props.state.left[item] }, this.props.inputProps))}
         </div>
         <div className={InputRow.syncColClass}>
-          <SyncInputs item={item} synced={this.props.state.sync[item]} onChange={this.props.setSync} />
+          <SyncInput item={item} synced={this.props.state.sync[item]} onChange={this.props.setSync} />
         </div>
         <div className={InputRow.inputColClass}>
           {React.createElement(inputClass, Object.assign({ pos: 'right', item: item, value: this.props.state.right[item] }, this.props.inputProps))}
