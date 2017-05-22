@@ -43,6 +43,18 @@ class App extends Component {
       this.setState({ [pos]: state });
     }
   }
+  setSync = (item, value) => {
+    let state = this.state;
+    let sync = state.sync;
+    sync[item] = value;
+    let updated = { sync: sync };
+    if (value === true) {
+      let right = state.right;
+      right[item] = state.left[item];
+      updated.right = right;
+    }
+    this.setState(updated);
+  }
   render() {
     return (
       <div className="container">
