@@ -1,4 +1,3 @@
-import { Component } from 'react';
 import InputRow from './InputRow';
 import NumberInput from './NumberInput';
 
