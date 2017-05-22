@@ -19,7 +19,6 @@ class App extends Component {
     { value: 'chargeBlade', factor: {}, text: 'チャージアックス' },
     { value: 'insectGlaive', factor: {}, text: '操虫棍' }
   ]
-  setWeapon = (weapon) => this.setState({ weapon: weapon })
   constructor(props) {
     super(props);
 
@@ -31,6 +30,18 @@ class App extends Component {
       left: new InputState({}), right: new InputState({}),
       sync: sync
     };
+  }
+  setWeapon = (weapon) => this.setState({ weapon: weapon })
+  setForm = (pos, item, value) => {
+    if (this.state.sync[item]) {
+      let { left, right } = this.this.state;
+      left[item] = right[item] = value;
+      this.setState({ left: left, right: right });
+    } else {
+      let state = this.state[pos];
+      state[item] = value;
+      this.setState({ [pos]: state });
+    }
   }
   render() {
     return (
