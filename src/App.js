@@ -67,6 +67,8 @@ class App extends Component {
         <WeaponRow item="weapon" weapons={this.weapons} value={this.state.weapon} onChange={this.setWeapon} />
         <NumberInputRow labelText="武器攻撃力" item="weaponAtk" state={this.state} setSync={this.setSync}
           inputProps={{ min: 0, max: 1000, step: 10, onChange: this.setForm }} />
+        <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} setSync={this.setSync}
+            inputProps={{ min: -100, max: 100, step: 5, onChange: this.setForm }} />
       </div>
     );
   }
