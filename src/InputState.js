@@ -8,6 +8,11 @@ class InputState {
       }
     }
   }
+
+  findFactor(item, value) {
+    let obj = InputState[item].find((x) => x.value === value)
+    return obj ? obj.factor : undefined;
+  }
 }
 
 InputState.defaultState = {
