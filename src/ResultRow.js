@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Result from './Result';
 import { labelColClass, inputColClass, syncColClass } from './InputRow';
 
 class ResultRow extends Component {
@@ -22,4 +23,4 @@ class ResultRow extends Component {
   }
 }
 
-export default Result;
+export default ResultRow;
