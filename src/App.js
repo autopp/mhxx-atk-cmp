@@ -3,6 +3,7 @@ import InputState from './InputState';
 import WeaponRow from './WeaponRow';
 import SectionRow from './SectionRow';
 import NumberInputRow from './NumberInputRow';
+import RadioInputRow from './RadioInputRow';
 import ResultRow from './ResultRow';
 import './App.css';
 
@@ -77,6 +78,8 @@ class App extends Component {
           inputProps={{ min: 0, max: 1000, step: 10, onChange: this.setForm }} />
         <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} setSync={this.setSync}
             inputProps={{ min: -100, max: 100, step: 5, onChange: this.setForm }} />
+        <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} setSync={this.setSync}
+          inputProps={{ items: InputState.sharpnesses, onChange: this.setForm }} />
         <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
       </div>
     );
