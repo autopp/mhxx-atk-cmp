@@ -80,6 +80,9 @@ class App extends Component {
             inputProps={{ min: -100, max: 100, step: 5, onChange: this.setForm }} />
         <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} setSync={this.setSync}
           inputProps={{ items: InputState.sharpnesses, onChange: this.setForm }} />
+        <SectionRow text="アイテム・食事" />
+        <RadioInputRow labelText="護符・爪" item="possessedItem" state={this.state} setSync={this.setSync}
+          inputProps={{ items: InputState.possessedItems, onChange: this.setForm }} />
         <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
       </div>
     );
