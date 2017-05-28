@@ -77,7 +77,7 @@ class App extends Component {
           inputProps={{ min: 0, max: 1000, step: 10, onChange: this.setForm }} />
         <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} setSync={this.setSync}
             inputProps={{ min: -100, max: 100, step: 5, onChange: this.setForm }} />
-          <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
+        <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
       </div>
     );
   }
