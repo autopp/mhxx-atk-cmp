@@ -83,6 +83,8 @@ class App extends Component {
         <SectionRow text="アイテム・食事" />
         <RadioInputRow labelText="護符・爪" item="possessedItem" state={this.state} setSync={this.setSync}
           inputProps={{ items: InputState.possessedItems, onChange: this.setForm }} />
+        <RadioInputRow labelText="鬼人薬" item="permanentItem" state={this.state} setSync={this.setSync}
+          inputProps={{ items: InputState.permanentItems, onChange: this.setForm }} />
         <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
       </div>
     );
