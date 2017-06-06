@@ -4,6 +4,7 @@ import WeaponRow from './WeaponRow';
 import SectionRow from './SectionRow';
 import NumberInputRow from './NumberInputRow';
 import RadioInputRow from './RadioInputRow';
+import CheckboxInputRow from './CheckboxInputRow';
 import ResultRow from './ResultRow';
 import './App.css';
 
@@ -96,6 +97,8 @@ class App extends Component {
           inputProps={{ items: InputState.critUps, onChange: this.setForm }} />
         <RadioInputRow labelText="挑戦者/フルチャージ/力の解放" item="leftArmSkill" state={this.state} setSync={this.setSync}
           inputProps={{ items: InputState.leftArmSkills, onChange: this.setForm }} />
+        <CheckboxInputRow labelText="弱点特効" item="weakness" state={this.state} setSync={this.setSync}
+          inputProps={{ onChange: this.setForm }} />
         <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
       </div>
     );
