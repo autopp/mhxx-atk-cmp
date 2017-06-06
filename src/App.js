@@ -99,6 +99,8 @@ class App extends Component {
           inputProps={{ items: InputState.leftArmSkills, onChange: this.setForm }} />
         <CheckboxInputRow labelText="弱点特効" item="weakness" state={this.state} setSync={this.setSync}
           inputProps={{ onChange: this.setForm }} />
+        <CheckboxInputRow labelText="超会心" item="superCrit" state={this.state} setSync={this.setSync}
+          inputProps={{ onChange: this.setForm }} />
         <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
       </div>
     );
