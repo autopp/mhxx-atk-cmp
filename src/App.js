@@ -105,6 +105,8 @@ class App extends Component {
           inputProps={{ onChange: this.setForm }} />
         <RadioInputRow labelText="連撃の心得" item="chainCrit" state={this.state} setSync={this.setSync}
           inputProps={{ items: InputState.chainCrits, onChange: this.setForm }} />
+        <RadioInputRow labelText="北風の狩人/南風の狩人" item="climateAdaption" state={this.state} setSync={this.setSync}
+          inputProps={{ items: InputState.climateAdaptions, onChange: this.setForm }} />
         <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
       </div>
     );
