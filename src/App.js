@@ -65,6 +65,7 @@ class App extends Component {
   }
 
   setWeapon = (weapon) => this.setState({ weapon: weapon })
+
   setForm = (pos, item, value) => {
     if (this.state.sync[item]) {
       let { left, right } = this.this.state;
@@ -76,6 +77,7 @@ class App extends Component {
       this.setState({ [pos]: state });
     }
   }
+
   setSync = (item, value) => {
     let state = this.state;
     let sync = state.sync;
