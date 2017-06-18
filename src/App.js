@@ -14,16 +14,18 @@ class App extends Component {
 
     let sync = {};
     InputState.stateKeys.forEach(key => sync[key] = false);
-    let { weapon } = this.parseQuery(location.search.substring(1));
+    let { weapon, left, right } = this.parseQuery(location.search.substring(1));
     this.state = {
       weapon: weapon || 'greatSword',
-      left: new InputState({}), right: new InputState({}),
+      left: new InputState(left), right: new InputState(right),
       sync: sync
     };
   }
 
   parseQuery = (qry) => {
     let state = { weapon: undefined, left: {}, right: {} };
+    let types = InputState.stateTypes;
+
     qry.split('&').forEach((kv) => {
       let [k, v] = kv.split('=');
 
@@ -33,9 +35,33 @@ class App extends Component {
         }
         return;
       }
+
+      let matched = /^(left|right)_(.+)$/.exec(k);
+      if (!matched) {
+        return;
+      }
+
+      let [ _all, pos, item ] = matched;
+      let value = this.convertParameter(types[item], v);
+      if (value !== undefined) {
+        state[pos][item] = value;
+      }
     });
 
     return state;
+  }
+
+  convertParameter = (type, value) => {
+    switch (type) {
+      case 'boolean':
+        return value === 'true' ? true : (value === 'false' ? false : undefined);
+      case 'number':
+        return parseInt(value, 10);
+      case 'string':
+        return value;
+      default:
+        return undefined;
+    }
   }
 
   setWeapon = (weapon) => this.setState({ weapon: weapon })
