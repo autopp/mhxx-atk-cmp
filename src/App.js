@@ -14,13 +14,30 @@ class App extends Component {
 
     let sync = {};
     InputState.stateKeys.forEach(key => sync[key] = false);
-
+    let { weapon } = this.parseQuery(location.search.substring(1));
     this.state = {
-      weapon: 'greatSword',
+      weapon: weapon || 'greatSword',
       left: new InputState({}), right: new InputState({}),
       sync: sync
     };
   }
+
+  parseQuery = (qry) => {
+    let state = { weapon: undefined, left: {}, right: {} };
+    qry.split('&').forEach((kv) => {
+      let [k, v] = kv.split('=');
+
+      if (k === 'weapon') {
+        if (InputState.weapons.find(w => w.value === v)) {
+          state.weapon = v;
+        }
+        return;
+      }
+    });
+
+    return state;
+  }
+
   setWeapon = (weapon) => this.setState({ weapon: weapon })
   setForm = (pos, item, value) => {
     if (this.state.sync[item]) {
