@@ -97,6 +97,19 @@ class App extends Component {
     this.setState({ sync: newSyncs });
   }
 
+  genQuery = () => {
+    let ary = [`weapon=${encodeURIComponent(this.state.weapon)}`];
+    ['left', 'right'].forEach(pos => {
+      for (let item in this.state[pos]) {
+        if (!InputState.stateKeys.includes(item)) {
+          continue;
+        }
+        ary.push(`${pos}_${item}=${encodeURIComponent(this.state[pos][item])}`);
+      }
+    });
+    return `?${ary.join('&')}`
+  }
+
   render() {
     return (
       <div className="container">
@@ -134,6 +147,11 @@ class App extends Component {
         <ResultRow leftResult={this.state.left.calcExpectedAtk()} rightResult={this.state.right.calcExpectedAtk()} onClick={this.syncAll} />
       </div>
     );
+  }
+
+  componentDidUpdate(_prevProps, _prevState) {
+    let qry = this.genQuery();
+    history.replaceState('', '', qry);
   }
 }
 
