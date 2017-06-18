@@ -9,19 +9,6 @@ import ResultRow from './ResultRow';
 import './App.css';
 
 class App extends Component {
-  weapons = [
-    { value: 'greatSword', factor: {}, text: '大剣' },
-    { value: 'longSword', factor: {}, text: '太刀' },
-    { value: 'swordAndShield', factor: {}, text: '片手剣' },
-    { value: 'dualSword', factor: {}, text: '双剣' },
-    { value: 'hammer', factor: {}, text: 'ハンマー' },
-    { value: 'huntingHorn', factor: {}, text: '狩猟笛' },
-    { value: 'Lance', factor: {}, text: 'ランス' },
-    { value: 'gunlance', factor: {}, text: 'ガンランス' },
-    { value: 'switchAxe', factor: {}, text: 'スラッシュアックス' },
-    { value: 'chargeBlade', factor: {}, text: 'チャージアックス' },
-    { value: 'insectGlaive', factor: {}, text: '操虫棍' }
-  ]
   constructor(props) {
     super(props);
 
@@ -74,7 +61,7 @@ class App extends Component {
           </div>
         </div>
         <SectionRow text="武器" />
-        <WeaponRow item="weapon" weapons={this.weapons} value={this.state.weapon} onChange={this.setWeapon} />
+        <WeaponRow item="weapon" weapons={InputState.weapons} value={this.state.weapon} onChange={this.setWeapon} />
         <NumberInputRow labelText="武器攻撃力" item="weaponAtk" state={this.state} setSync={this.setSync} inputProps={{ min: 0, max: 1000, step: 10, onChange: this.setForm }} />
         <NumberInputRow labelText="武器会心率" item="weaponCrit" state={this.state} setSync={this.setSync} inputProps={{ min: -100, max: 100, step: 5, onChange: this.setForm }} />
         <RadioInputRow labelText="斬れ味" item="sharpness" state={this.state} setSync={this.setSync} inputProps={{ items: InputState.sharpnesses, onChange: this.setForm }} />
