@@ -68,7 +68,7 @@ class App extends Component {
 
   setForm = (pos, item, value) => {
     if (this.state.sync[item]) {
-      let { left, right } = this.this.state;
+      let { left, right } = this.state;
       left[item] = right[item] = value;
       this.setState({ left: left, right: right });
     } else {
